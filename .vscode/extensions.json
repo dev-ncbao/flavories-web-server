@@ -1,13 +1,13 @@
 {
-  "recommendations": [
-    "dracula-theme.theme-dracula",
-    "editorconfig.editorconfig",
-    "dbaeumer.vscode-eslint",
-    "pkief.material-icon-theme",
-    "esbenp.prettier-vscode",
-    "natqe.reload",
-    "heartacker.better-extend-keybindings",
-    "github.copilot-chat",
-    "imgildev.vscode-nestjs-pack"
-  ]
+    "recommendations": [
+        "dracula-theme.theme-dracula",
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "pkief.material-icon-theme",
+        "esbenp.prettier-vscode",
+        "natqe.reload",
+        "heartacker.better-extend-keybindings",
+        "github.copilot-chat",
+        "imgildev.vscode-nestjs-pack"
+    ]
 }
