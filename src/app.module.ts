@@ -3,7 +3,10 @@ import { AppController } from './app.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppService } from './app.service';
 import { UserModule } from './modules/users/users.module';
-import { User } from './modules/users/users.model';
+import { AuthModule } from './modules/auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtStrategy } from './modules/auth/jwt.strategy';
 
 @Module({
     imports: [
@@ -18,7 +21,8 @@ import { User } from './modules/users/users.model';
             synchronize: true
             // models: [User]
         }),
-        UserModule
+        UserModule,
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService]

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Default, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model {
@@ -14,4 +14,8 @@ export class User extends Model {
     @Column
     @ApiProperty()
     email: string;
+
+    @Default(false)
+    @Column
+    isDeleted: boolean;
 }
