@@ -336,7 +336,7 @@ paket-files/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-!.vscode/flavories-web-server.code-profile
+!.vscode/*.code-profile
 
 # CodeRush
 .cr/
