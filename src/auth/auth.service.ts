@@ -16,8 +16,6 @@ export class AuthService {
             signInDto.password,
         );
 
-        console.log('ncbao', user);
-
         if (!user) {
             throw new UnauthorizedException(
                 'Username or password is not valid',
