@@ -24,10 +24,10 @@ export class AuthService {
 
         const token: string = await this.jwtService.signAsync({
             sub: Number(user.id),
-            email: user.email,
-            username: user.username,
+            email: user.getEmail(),
+            username: user.getUsername(),
         });
-
+       
         return token;
     }
 }
