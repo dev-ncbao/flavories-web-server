@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { CatsModule } from './cats/cats.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './users/user.module';
 
 @Module({
     imports: [
@@ -14,9 +15,9 @@ import { CatsModule } from './cats/cats.module';
             password: '1111',
             database: 'flavories',
             autoLoadModels: true,
-            // synchronize: true,
         }),
-        CatsModule,
+        AuthModule,
+        UserModule,
     ],
     controllers: [AppController],
     providers: [AppService],

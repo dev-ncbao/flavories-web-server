@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "AppController_getHello",
+                "parameters": [],
+                "responses": { "200": { "description": "" } },
+                "tags": ["App"]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_signIn",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInDto"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "" } },
+                "tags": ["Auth"]
+            }
+        }
+    },
+    "info": {
+        "title": "Cats example",
+        "description": "The cats API description",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [{ "name": "cats", "description": "" }],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "SignInDto": {
+                "type": "object",
+                "properties": {
+                    "username": { "type": "string" },
+                    "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+            }
+        }
+    }
+}
