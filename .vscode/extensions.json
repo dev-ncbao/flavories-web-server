@@ -8,6 +8,7 @@
         "natqe.reload",
         "heartacker.better-extend-keybindings",
         "github.copilot-chat",
-        "imgildev.vscode-nestjs-pack"
+        "imgildev.vscode-nestjs-pack",
+        "narasimapandiyan.jetbrainsmono"
     ]
 }

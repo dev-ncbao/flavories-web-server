@@ -21,13 +21,48 @@ module.exports = {
 
         const users = [];
 
+        // admin
+        users.push({
+            firstName: 'admin',
+            email: 'admin@flavories.com',
+            username: 'admin',
+            role: 1,
+            passwordHashed: await bcrypt.hash('admin', 10),
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+
+        // chef
         for (let i = 0; i < 20; i++) {
             users.push({
+                firstName: faker.person.firstName(),
+                lastName: faker.person.lastName(),
                 email: faker.internet.email(),
                 username: faker.internet.username(),
-                password: hashedPassword,
+                role: 2,
+                bio: faker.person.bio(),
+                gender: faker.number.int(1, 2),
+                avatarUrl: faker.image.avatar(),
+                passwordHashed: hashedPassword,
                 createdAt: new Date(),
-                updatedAt: new Date(),
+                updatedAt: new Date()
+            });
+        }
+
+        // user
+        for (let i = 0; i < 20; i++) {
+            users.push({
+                firstName: faker.person.firstName(),
+                lastName: faker.person.lastName(),
+                email: faker.internet.email(),
+                username: faker.internet.username(),
+                role: 3,
+                bio: faker.person.bio(),
+                gender: faker.number.int(1, 2),
+                avatarUrl: faker.image.avatar(),
+                passwordHashed: hashedPassword,
+                createdAt: new Date(),
+                updatedAt: new Date()
             });
         }
 
@@ -43,6 +78,5 @@ module.exports = {
          */
 
         await queryInterface.bulkDelete('users', null, {});
-    },
+    }
 };
-
