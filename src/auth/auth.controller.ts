@@ -4,10 +4,10 @@ import {
     Post,
     HttpCode,
     HttpStatus,
-    Get,
+    Get
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignInRequestDto, SignInResponseDto } from './auth.dto';
+import { SignInRequest, SignInResponse } from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -15,11 +15,11 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    async signIn(@Body() signInDto: SignInRequestDto) {
+    async signIn(@Body() signInDto: SignInRequest) {
         const token: string = await this.authService.signIn(signInDto);
 
-        const response: SignInResponseDto = {
-            access_token: token,
+        const response: SignInResponse = {
+            accessToken: token
         };
 
         return response;

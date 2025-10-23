@@ -35,8 +35,38 @@ export class User extends Model {
             return this.getDataValue('password') as string | null;
         },
     }) */
-    password: string;
-    getPassword(): string | null {
-        return this.getDataValue('password') as string | null;
+    passwordHashed: string;
+    getPasswordHashed(): string | null {
+        return this.getDataValue('passwordHashed') as string | null;
+    }
+
+    @Column
+    firstName: string;
+    getFirstName(): string | null {
+        return this.getDataValue('firstName') as string | null;
+    }
+
+    @Column
+    lastName: string;
+    getLastName(): string | null {
+        return this.getDataValue('lastName') as string | null;
+    }
+
+    @Column
+    gender: number;
+    getGender(): number | null {
+        return this.getDataValue('gender') as number | null;
+    }
+
+    @Column
+    avatarUrl: string;
+    getAvatarUrl(): string | null {
+        return this.getDataValue('avatarUrl') as string | null;
+    }
+
+    @Column
+    bio: string;
+    getBio(): string | null {
+        return this.getDataValue('bio') as string | null;
     }
 }
