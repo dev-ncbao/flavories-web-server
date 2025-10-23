@@ -9,19 +9,59 @@ export class UserService {
 
     async findOneByUsernameAndPassword(
         username: string,
-        password: string,
+        password: string
     ): Promise<User> {
         const user = await this.userModel.findOne({
             where: {
-                username: username,
-            },
+                username: username
+            }
         });
+
+        if (!user) {
+            return null;
+        }
 
         const isMatched = await bcrypt.compare(
             password,
-            /* user.get('password') */ user.getPassword(),
+            /* user.get('password') */ user?.getPasswordHashed()
         );
 
         return isMatched ? user : null;
+    }
+
+    async findOneByEmailAndPassword(
+        email: string,
+        password: string
+    ): Promise<User> {
+        const user = await this.userModel.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        const isMatched = await bcrypt.compare(
+            password,
+            /* user.get('password') */ user?.getPasswordHashed()
+        );
+
+        return isMatched ? user : null;
+    }
+
+    async findOneById(id: number): Promise<User> {
+        const user = await this.userModel.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
     }
 }
