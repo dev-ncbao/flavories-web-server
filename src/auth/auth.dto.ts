@@ -11,3 +11,7 @@ export class SignInRequest {
 export class SignInResponse {
     accessToken: string;
 }
+
+export class TokenPayload {
+    sub: number;
+}

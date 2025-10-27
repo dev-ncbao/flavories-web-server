@@ -3,8 +3,7 @@ import {
     Controller,
     Post,
     HttpCode,
-    HttpStatus,
-    Get
+    HttpStatus
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInRequest, SignInResponse } from './auth.dto';
@@ -23,10 +22,5 @@ export class AuthController {
         };
 
         return response;
-    }
-
-    @Get('check')
-    isSignedIn(): string {
-        return 'You are signed in!';
     }
 }
