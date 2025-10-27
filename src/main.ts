@@ -6,17 +6,32 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.enableCors({
-        origin: 'http://localhost:5555',
+        origin: 'http://localhost:5555'
     });
 
+    // app.useGlobalInterceptors(
+    //     new ClassSerializerInterceptor(app.get(Reflector))
+    // );
+
     const config = new DocumentBuilder()
-        .setTitle('Cats example')
-        .setDescription('The cats API description')
-        .setVersion('1.0')
-        .addTag('cats')
+        .setTitle('Flavories API')
+        .setVersion('version: 1.0')
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                description: 'Enter JWT token'
+            },
+            'accessToken'
+        )
         .build();
     const documentFactory = () => SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, documentFactory);
+    SwaggerModule.setup('api', app, documentFactory, {
+        swaggerOptions: {
+            persistAuthorization: true
+        }
+    });
 
     await app.listen(3000);
 }

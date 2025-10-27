@@ -4,9 +4,13 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './users/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            isGlobal: true
+        }),
         SequelizeModule.forRoot({
             dialect: 'mysql',
             host: 'localhost',
@@ -14,12 +18,12 @@ import { UserModule } from './users/user.module';
             username: 'sa',
             password: '1111',
             database: 'flavories',
-            autoLoadModels: true,
+            autoLoadModels: true
         }),
         AuthModule,
-        UserModule,
+        UserModule
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService]
 })
 export class AppModule {}

@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignInRequest } from './auth.dto';
-import { isValidEmail } from 'src/common/utils/emailUtils';
+import { isValidEmail } from 'src/common/utils/email.utils';
 import { User } from 'src/users/user.model';
 
 @Injectable()
