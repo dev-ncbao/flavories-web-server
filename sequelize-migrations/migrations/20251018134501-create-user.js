@@ -21,7 +21,7 @@ module.exports = {
             },
             avatarUrl: { allowNull: true, type: Sequelize.STRING },
             bio: { allowNull: true, type: Sequelize.STRING },
-            role: { allowNull: true, type: Sequelize.INTEGER },
+            roleId: { allowNull: true, type: Sequelize.INTEGER },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
