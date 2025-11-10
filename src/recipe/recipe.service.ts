@@ -10,4 +10,12 @@ export class RecipeService {
         const recipes = await this.recipeModel.findAll();
         return recipes;
     }
+
+    async getTrendingRecipes(limit: number = 10): Promise<Recipe[]> {
+        const recipes = await this.recipeModel.findAll({
+            order: [['trendingScore', 'DESC']],
+            limit: limit
+        });
+        return recipes;
+    }
 }

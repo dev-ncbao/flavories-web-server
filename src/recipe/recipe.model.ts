@@ -117,4 +117,8 @@ export class Recipe extends Model {
         const value = this.getDataValue('trendingScore') as string | number;
         return parseFloat(String(value));
     }
+
+    getCreatedAt(): Date {
+        return this.getDataValue('createdAt') as Date;
+    }
 }

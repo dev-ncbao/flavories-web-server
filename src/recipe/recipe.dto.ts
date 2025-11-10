@@ -9,4 +9,5 @@ export class RecipeDto {
     viewCount?: number;
     commentCount?: number;
     trendingScore?: number;
+    createdAt?: Date;
 }
