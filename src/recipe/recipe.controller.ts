@@ -14,7 +14,13 @@ export class RecipeController {
             id: Number(recipe.id),
             name: recipe.getName(),
             description: recipe.getDescription(),
-            image: recipe.getImage()
+            image: recipe.getImage(),
+            rating: recipe.getRating(),
+            likeCount: recipe.getLikeCount(),
+            dislikeCount: recipe.getDislikeCount(),
+            viewCount: recipe.getViewCount(),
+            commentCount: recipe.getCommentCount(),
+            trendingScore: recipe.getTrendingScore()
         }));
 
         return response;
