@@ -41,7 +41,7 @@ module.exports = {
             'https://images.unsplash.com/photo-1568901346375-23c9450c58cd'
         ];
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 100; i++) {
             const dishName = faker.food.dish();
             const adjectives = ['delicious', 'savory', 'mouth-watering', 'authentic', 'homemade', 'classic', 'traditional', 'flavorful', 'aromatic', 'tender'];
             const preparationMethods = ['perfectly cooked', 'expertly prepared', 'carefully crafted', 'slow-cooked', 'freshly made', 'hand-crafted', 'traditionally prepared'];
@@ -67,15 +67,35 @@ module.exports = {
             const commentScore = commentCount * 0.5; // Comments show engagement
             const trendingScore = parseFloat((ratingScore + likeScore + dislikeScore + viewScore + commentScore).toFixed(2));
             
-            // Generate realistic dates (recipes created in the past 6 months)
-            const createdAt = faker.date.between({ 
-                from: new Date(2025, 4, 1), // May 1, 2025
-                to: new Date() // Today
-            });
+            // Dynamic date calculation
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth(); // 0-indexed (0 = January, 10 = November)
+            
+            // First 50 recipes: created in current month
+            // Remaining 50 recipes: created in previous 6 months
+            let createdAt;
+            if (i < 50) {
+                // Current month recipes
+                const startOfMonth = new Date(currentYear, currentMonth, 1);
+                createdAt = faker.date.between({ 
+                    from: startOfMonth,
+                    to: now
+                });
+            } else {
+                // Previous 6 months recipes
+                const sixMonthsAgo = new Date(currentYear, currentMonth - 6, 1);
+                const endOfLastMonth = new Date(currentYear, currentMonth, 0); // Last day of previous month
+                createdAt = faker.date.between({ 
+                    from: sixMonthsAgo,
+                    to: endOfLastMonth
+                });
+            }
+            
             // updatedAt is between createdAt and now
             const updatedAt = faker.date.between({ 
                 from: createdAt, 
-                to: new Date() 
+                to: now
             });
             
             recipes.push({
