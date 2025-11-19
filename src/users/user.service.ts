@@ -7,6 +7,50 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
     constructor(@InjectModel(User) private userModel: typeof User) {}
 
+    async createUser(
+        firstName: string,
+        lastName: string,
+        email: string,
+        username: string,
+        password: string
+    ): Promise<void> {
+        await User.create({
+            firstName,
+            lastName,
+            email,
+            username,
+            passwordHashed: await bcrypt.hash(password, 10)
+        });
+    }
+
+    async findOneByUsername(username: string): Promise<User> {
+        const user = await this.userModel.findOne({
+            where: {
+                username: username
+            }
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
+    }
+
+    async findOneByEmail(email: string): Promise<User> {
+        const user = await this.userModel.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
+    }
+
     async findOneByUsernameAndPassword(
         username: string,
         password: string

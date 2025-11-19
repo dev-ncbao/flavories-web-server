@@ -15,3 +15,12 @@ export class SignInResponse {
 export class TokenPayload {
     sub: number;
 }
+
+export class SignUpRequest {
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+}
