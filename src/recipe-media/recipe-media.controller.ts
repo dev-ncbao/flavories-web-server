@@ -30,4 +30,9 @@ export class RecipeMediaController {
   remove(@Param('id') id: number) {
     return this.service.remove(id);
   }
+
+  @Get('recipe/:recipeId')
+  findByRecipeId(@Param('recipeId') recipeId: number) {
+    return this.service.findByRecipeId(recipeId);
+  }
 }

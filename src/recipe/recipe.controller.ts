@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Param } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { RecipeService } from './recipe.service';
 import { RecipeDto } from './recipe.dto';
@@ -64,5 +64,10 @@ export class RecipeController {
         const recipes = await this.recipeService.getRecipes(options);
 
         return recipes;
+    }
+
+    @Get(':id')
+    async getRecipeById(@Param('id') id: number): Promise<any> {
+        return this.recipeService.findOne(id);
     }
 }

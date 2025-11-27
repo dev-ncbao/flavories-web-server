@@ -59,4 +59,8 @@ export class RecipeService {
 
         return recipes;
     }
+
+    async findOne(id: number): Promise<Recipe | null> {
+        return this.recipeModel.findByPk(id);
+    }
 }

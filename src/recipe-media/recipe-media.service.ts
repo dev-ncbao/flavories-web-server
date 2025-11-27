@@ -29,4 +29,11 @@ export class RecipeMediaService {
   async remove(id: number): Promise<number> {
     return this.recipeMediaModel.destroy({ where: { id } });
   }
+
+  async findByRecipeId(recipeId: number): Promise<RecipeMedia[]> {
+    return this.recipeMediaModel.findAll({
+      where: { recipeId },
+      order: [['sortOrder', 'ASC']]
+    });
+  }
 }
