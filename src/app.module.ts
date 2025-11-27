@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppService } from './app.service';
+import { MediaTypesModule } from './media-types/media-types.module';
+import { RecipeMediaModule } from './recipe-media/recipe-media.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './users/user.module';
 import { RecipeModule } from './recipe/recipe.module';
@@ -26,6 +28,8 @@ import { ConfigModule } from '@nestjs/config';
             database: 'flavories',
             autoLoadModels: true
         }),
+        MediaTypesModule,
+        RecipeMediaModule,
         AuthModule,
         UserModule,
         RecipeModule,
