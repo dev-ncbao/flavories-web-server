@@ -33,9 +33,9 @@ export class Recipe extends Model {
             return this.getDataValue('image') as string | null;
         },
     }) */
-    image: string;
-    getImage(): string | null {
-        return this.getDataValue('image') as string | null;
+    thumbnail: string;
+    getThumbnail(): string | null {
+        return this.getDataValue('thumbnail') as string | null;
     }
 
     @Column /* ({

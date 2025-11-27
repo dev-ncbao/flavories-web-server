@@ -31,7 +31,7 @@ module.exports = {
         }
 
         await queryInterface.bulkInsert(
-            'recipeIngredients',
+            'recipe_ingredients',
             recipeIngredients,
             {}
         );
@@ -45,7 +45,11 @@ module.exports = {
          * await queryInterface.bulkDelete('People', null, {});
          */
 
-        await queryInterface.bulkDelete('recipeIngredients', null, {});
+        await queryInterface.bulkDelete('recipe_ingredients', null, {});
+
+        await queryInterface.sequelize.query(
+            'ALTER TABLE recipe_ingredients AUTO_INCREMENT = 1;'
+        );
     }
 };
 

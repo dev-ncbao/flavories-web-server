@@ -101,7 +101,7 @@ module.exports = {
             recipes.push({
                 name: dishName,
                 description: description,
-                image: `${randomImage}?w=640&h=480&fit=crop`,
+                thumbnail: `${randomImage}?w=640&h=480&fit=crop`,
                 rating: rating,
                 likeCount: likeCount,
                 dislikeCount: dislikeCount,
@@ -125,6 +125,10 @@ module.exports = {
          */
 
         await queryInterface.bulkDelete('recipes', null, {});
+
+        await queryInterface.sequelize.query(
+            'ALTER TABLE recipes AUTO_INCREMENT = 1;'
+        );
     }
 };
 

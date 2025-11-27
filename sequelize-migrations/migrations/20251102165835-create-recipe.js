@@ -16,7 +16,7 @@ module.exports = {
             description: {
                 type: Sequelize.STRING
             },
-            image: {
+            thumbnail: {
                 type: Sequelize.STRING
             },
             rating: {

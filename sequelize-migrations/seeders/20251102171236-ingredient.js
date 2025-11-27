@@ -37,6 +37,10 @@ module.exports = {
          */
 
         await queryInterface.bulkDelete('ingredients', null, {});
+
+        await queryInterface.sequelize.query(
+            'ALTER TABLE ingredients AUTO_INCREMENT = 1;'
+        );
     }
 };
 

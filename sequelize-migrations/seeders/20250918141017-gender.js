@@ -14,12 +14,11 @@ module.exports = {
          */
 
         const genders = [
-            { name: 'Admin', createdAt: new Date(), updatedAt: new Date() },
-            { name: 'Chef', createdAt: new Date(), updatedAt: new Date() },
-            { name: 'User', createdAt: new Date(), updatedAt: new Date() }
+            { name: 'Male', createdAt: new Date(), updatedAt: new Date() },
+            { name: 'Female', createdAt: new Date(), updatedAt: new Date() }
         ];
 
-        await queryInterface.bulkInsert('roles', genders, {});
+        await queryInterface.bulkInsert('genders', genders, {});
     },
 
     async down(queryInterface, Sequelize) {
@@ -29,8 +28,11 @@ module.exports = {
          * Example:
          * await queryInterface.bulkDelete('People', null, {});
          */
+        await queryInterface.bulkDelete('genders', null, {});
 
-        await queryInterface.bulkDelete('roles', null, {});
+        await queryInterface.sequelize.query(
+            'ALTER TABLE genders AUTO_INCREMENT = 1;'
+        );
     }
 };
 

@@ -3,18 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe_ingredients', {
+        await queryInterface.createTable('ratings', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            recipeId: {
-                type: Sequelize.INTEGER
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                comment: 'User who rated the recipe'
             },
-            ingredientId: {
-                type: Sequelize.INTEGER
+            recipeId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                comment: 'Recipe being rated'
+            },
+            rating: {
+                type: Sequelize.DECIMAL(2, 1),
+                allowNull: false,
+                comment: 'Rating value from 0.0 to 5.0'
             },
             createdAt: {
                 allowNull: false,
@@ -28,7 +37,6 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('recipe_ingredients');
+        await queryInterface.dropTable('ratings');
     }
 };
-

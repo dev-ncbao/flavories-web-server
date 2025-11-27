@@ -5,6 +5,11 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './users/user.module';
 import { RecipeModule } from './recipe/recipe.module';
+import { CommentModule } from './comment/comment.module';
+import { RatingModule } from './rating/rating.module';
+import { LikeModule } from './like/like.module';
+import { DislikeModule } from './dislike/dislike.module';
+import { ViewModule } from './view/view.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -23,7 +28,12 @@ import { ConfigModule } from '@nestjs/config';
         }),
         AuthModule,
         UserModule,
-        RecipeModule
+        RecipeModule,
+        CommentModule,
+        RatingModule,
+        LikeModule,
+        DislikeModule,
+        ViewModule
     ],
     controllers: [AppController],
     providers: [AppService]
