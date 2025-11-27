@@ -15,21 +15,16 @@ export class RatingService {
     constructor(@InjectModel(Rating) private ratingModel: typeof Rating) {}
 
     async getRatings(options: GetRatingsOptions = {}): Promise<Rating[]> {
-        const {
-            limit = 10,
-            page = 1,
-            recipeId,
-            userId
-        } = options;
+        const { limit = 10, page = 1, recipeId, userId } = options;
 
         const offset = (page - 1) * limit;
 
         const whereClause: Record<string, number> = {};
-        
+
         if (recipeId !== undefined) {
             whereClause.recipeId = recipeId;
         }
-        
+
         if (userId !== undefined) {
             whereClause.userId = userId;
         }
@@ -48,7 +43,10 @@ export class RatingService {
         return await this.ratingModel.findByPk(id);
     }
 
-    async getRatingByUserAndRecipe(userId: number, recipeId: number): Promise<Rating> {
+    async getRatingByUserAndRecipe(
+        userId: number,
+        recipeId: number
+    ): Promise<Rating> {
         return await this.ratingModel.findOne({
             where: { userId, recipeId }
         });
@@ -72,12 +70,15 @@ export class RatingService {
         });
     }
 
-    async updateRating(id: number, updateRatingDto: UpdateRatingDto): Promise<Rating> {
+    async updateRating(
+        id: number,
+        updateRatingDto: UpdateRatingDto
+    ): Promise<Rating> {
         const rating = await this.ratingModel.findByPk(id);
         if (!rating) {
             throw new Error('Rating not found');
         }
-        
+
         rating.rating = updateRatingDto.rating;
         await rating.save();
         return rating;
@@ -92,13 +93,19 @@ export class RatingService {
     }
 
     async getAverageRating(recipeId: number): Promise<number> {
-        const result = await this.ratingModel.findOne({
+        const result = (await this.ratingModel.findOne({
             where: { recipeId },
             attributes: [
-                [this.ratingModel.sequelize.fn('AVG', this.ratingModel.sequelize.col('rating')), 'avgRating']
+                [
+                    this.ratingModel.sequelize.fn(
+                        'AVG',
+                        this.ratingModel.sequelize.col('rating')
+                    ),
+                    'avgRating'
+                ]
             ],
             raw: true
-        }) as { avgRating?: string | number } | null;
+        })) as { avgRating?: string | number } | null;
 
         const avgRaw = result?.avgRating ?? 0;
         if (typeof avgRaw === 'string') {

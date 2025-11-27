@@ -17,7 +17,9 @@ module.exports = {
         );
 
         if (recipes.length === 0 || users.length === 0) {
-            console.log('No recipes or users found. Please seed recipes and users first.');
+            console.log(
+                'No recipes or users found. Please seed recipes and users first.'
+            );
             return;
         }
 
@@ -28,7 +30,7 @@ module.exports = {
         for (const recipe of recipes) {
             // Create 6 top-level comments
             const topLevelCommentIds = [];
-            
+
             for (let i = 0; i < 6; i++) {
                 const randomUser = faker.helpers.arrayElement(users);
                 const createdAt = faker.date.between({
@@ -44,16 +46,16 @@ module.exports = {
                         'Great recipe! I made a few adjustments and it turned out perfect.',
                         'This is now one of my favorite recipes. Easy to follow and tasty!',
                         'Wonderful dish! The flavors are amazing.',
-                        'I\'ve made this several times already. Never disappoints!',
+                        "I've made this several times already. Never disappoints!",
                         'Perfect for a family dinner. Highly recommend!',
                         'Simple yet delicious. Exactly what I was looking for.',
                         'The instructions were clear and easy to follow. Great results!',
-                        'Amazing recipe! Can\'t wait to make it again.',
+                        "Amazing recipe! Can't wait to make it again.",
                         'This exceeded my expectations. So good!',
                         'Fantastic! Everyone asked for seconds.',
                         'Quick and easy to make. Turned out great!',
                         'Delicious! I added some extra spices and it was perfect.',
-                        'Best recipe I\'ve tried in a while. Thank you!'
+                        "Best recipe I've tried in a while. Thank you!"
                     ]),
                     userId: randomUser.id,
                     recipeId: recipe.id,
@@ -71,7 +73,8 @@ module.exports = {
             // Randomly distribute replies among top-level comments
             for (let i = 0; i < 4; i++) {
                 const randomUser = faker.helpers.arrayElement(users);
-                const parentCommentId = faker.helpers.arrayElement(topLevelCommentIds);
+                const parentCommentId =
+                    faker.helpers.arrayElement(topLevelCommentIds);
                 const createdAt = faker.date.between({
                     from: new Date(2025, 10, 1),
                     to: new Date()
@@ -82,18 +85,18 @@ module.exports = {
                     content: faker.helpers.arrayElement([
                         'Thanks for the feedback! Glad you enjoyed it!',
                         'I agree! This recipe is a keeper.',
-                        'Same here! I\'ve made this multiple times.',
-                        'What adjustments did you make? I\'d love to try them!',
+                        "Same here! I've made this multiple times.",
+                        "What adjustments did you make? I'd love to try them!",
                         'Did you use any substitutions? Looking for healthier options.',
                         'How long did it take you to prepare?',
                         'I had the same experience! So delicious.',
-                        'Great tip! I\'ll try that next time.',
+                        "Great tip! I'll try that next time.",
                         'Thanks for sharing your experience!',
-                        'I\'m definitely going to try this soon!',
+                        "I'm definitely going to try this soon!",
                         'Appreciate the recommendation!',
                         'Good to know! Thanks for the heads up.',
-                        'That\'s a great suggestion!',
-                        'I\'ll keep that in mind when I make this.',
+                        "That's a great suggestion!",
+                        "I'll keep that in mind when I make this.",
                         'Thanks for the helpful comment!'
                     ]),
                     userId: randomUser.id,
@@ -110,7 +113,9 @@ module.exports = {
 
         await queryInterface.bulkInsert('comments', comments, {});
 
-        console.log(`✅ Successfully created ${comments.length} comments for ${recipes.length} recipes`);
+        console.log(
+            `✅ Successfully created ${comments.length} comments for ${recipes.length} recipes`
+        );
     },
 
     async down(queryInterface, Sequelize) {

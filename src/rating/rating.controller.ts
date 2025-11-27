@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Delete,
+    Body,
+    Param,
+    Query
+} from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { RatingService } from './rating.service';
 import { RatingDto, CreateRatingDto, UpdateRatingDto } from './rating.dto';
@@ -9,10 +18,30 @@ export class RatingController {
     constructor(private ratingService: RatingService) {}
 
     @Get()
-    @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of ratings per page (default: 10)' })
-    @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number (default: 1)' })
-    @ApiQuery({ name: 'recipeId', required: false, type: Number, description: 'Filter by recipe ID' })
-    @ApiQuery({ name: 'userId', required: false, type: Number, description: 'Filter by user ID' })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        description: 'Number of ratings per page (default: 10)'
+    })
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        description: 'Page number (default: 1)'
+    })
+    @ApiQuery({
+        name: 'recipeId',
+        required: false,
+        type: Number,
+        description: 'Filter by recipe ID'
+    })
+    @ApiQuery({
+        name: 'userId',
+        required: false,
+        type: Number,
+        description: 'Filter by user ID'
+    })
     async getRatings(
         @Query('limit') limit?: string,
         @Query('page') page?: string,
@@ -39,15 +68,19 @@ export class RatingController {
     }
 
     @Get('recipe/:recipeId/average')
-    async getAverageRating(@Param('recipeId') recipeId: string): Promise<{ averageRating: number }> {
-        const average = await this.ratingService.getAverageRating(parseInt(recipeId, 10));
+    async getAverageRating(
+        @Param('recipeId') recipeId: string
+    ): Promise<{ averageRating: number }> {
+        const average = await this.ratingService.getAverageRating(
+            parseInt(recipeId, 10)
+        );
         return { averageRating: average };
     }
 
     @Get(':id')
     async getRatingById(@Param('id') id: string): Promise<RatingDto> {
         const rating = await this.ratingService.getRatingById(parseInt(id, 10));
-        
+
         if (!rating) {
             throw new Error('Rating not found');
         }
@@ -63,7 +96,9 @@ export class RatingController {
     }
 
     @Post()
-    async createRating(@Body() createRatingDto: CreateRatingDto): Promise<RatingDto> {
+    async createRating(
+        @Body() createRatingDto: CreateRatingDto
+    ): Promise<RatingDto> {
         const rating = await this.ratingService.createRating(createRatingDto);
 
         return {
@@ -81,7 +116,10 @@ export class RatingController {
         @Param('id') id: string,
         @Body() updateRatingDto: UpdateRatingDto
     ): Promise<RatingDto> {
-        const rating = await this.ratingService.updateRating(parseInt(id, 10), updateRatingDto);
+        const rating = await this.ratingService.updateRating(
+            parseInt(id, 10),
+            updateRatingDto
+        );
 
         return {
             id: Number(rating.id),

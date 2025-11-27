@@ -15,21 +15,16 @@ export class DislikeService {
     constructor(@InjectModel(Dislike) private dislikeModel: typeof Dislike) {}
 
     async getDislikes(options: GetDislikesOptions = {}): Promise<Dislike[]> {
-        const {
-            limit = 10,
-            page = 1,
-            recipeId,
-            userId
-        } = options;
+        const { limit = 10, page = 1, recipeId, userId } = options;
 
         const offset = (page - 1) * limit;
 
         const whereClause: Record<string, number> = {};
-        
+
         if (recipeId !== undefined) {
             whereClause.recipeId = recipeId;
         }
-        
+
         if (userId !== undefined) {
             whereClause.userId = userId;
         }
@@ -48,7 +43,10 @@ export class DislikeService {
         return await this.dislikeModel.findByPk(id);
     }
 
-    async getDislikeByUserAndRecipe(userId: number, recipeId: number): Promise<Dislike> {
+    async getDislikeByUserAndRecipe(
+        userId: number,
+        recipeId: number
+    ): Promise<Dislike> {
         return await this.dislikeModel.findOne({
             where: { userId, recipeId }
         });

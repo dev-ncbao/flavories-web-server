@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Delete, Body, Param, Query } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Delete,
+    Body,
+    Param,
+    Query
+} from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { LikeService } from './like.service';
 import { LikeDto, CreateLikeDto } from './like.dto';
@@ -9,10 +17,30 @@ export class LikeController {
     constructor(private likeService: LikeService) {}
 
     @Get()
-    @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of likes per page (default: 10)' })
-    @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number (default: 1)' })
-    @ApiQuery({ name: 'recipeId', required: false, type: Number, description: 'Filter by recipe ID' })
-    @ApiQuery({ name: 'userId', required: false, type: Number, description: 'Filter by user ID' })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        description: 'Number of likes per page (default: 10)'
+    })
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        description: 'Page number (default: 1)'
+    })
+    @ApiQuery({
+        name: 'recipeId',
+        required: false,
+        type: Number,
+        description: 'Filter by recipe ID'
+    })
+    @ApiQuery({
+        name: 'userId',
+        required: false,
+        type: Number,
+        description: 'Filter by user ID'
+    })
     async getLikes(
         @Query('limit') limit?: string,
         @Query('page') page?: string,
@@ -38,15 +66,19 @@ export class LikeController {
     }
 
     @Get('recipe/:recipeId/count')
-    async getLikeCount(@Param('recipeId') recipeId: string): Promise<{ count: number }> {
-        const count = await this.likeService.getLikeCount(parseInt(recipeId, 10));
+    async getLikeCount(
+        @Param('recipeId') recipeId: string
+    ): Promise<{ count: number }> {
+        const count = await this.likeService.getLikeCount(
+            parseInt(recipeId, 10)
+        );
         return { count };
     }
 
     @Get(':id')
     async getLikeById(@Param('id') id: string): Promise<LikeDto> {
         const like = await this.likeService.getLikeById(parseInt(id, 10));
-        
+
         if (!like) {
             throw new Error('Like not found');
         }

@@ -8,12 +8,42 @@ export class RecipeController {
     constructor(private recipeService: RecipeService) {}
 
     @Get()
-    @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of recipes per page (default: 10)' })
-    @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number for infinite scroll (default: 1)' })
-    @ApiQuery({ name: 'startDate', required: false, type: String, description: 'Filter recipes created after this date (ISO format)' })
-    @ApiQuery({ name: 'endDate', required: false, type: String, description: 'Filter recipes created before this date (ISO format)' })
-    @ApiQuery({ name: 'sortBy', required: false, enum: ['name', 'trendingScore', 'createdAt'], description: 'Sort field (default: trendingScore)' })
-    @ApiQuery({ name: 'sortOrder', required: false, enum: ['ASC', 'DESC'], description: 'Sort order (default: DESC)' })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        description: 'Number of recipes per page (default: 10)'
+    })
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        description: 'Page number for infinite scroll (default: 1)'
+    })
+    @ApiQuery({
+        name: 'startDate',
+        required: false,
+        type: String,
+        description: 'Filter recipes created after this date (ISO format)'
+    })
+    @ApiQuery({
+        name: 'endDate',
+        required: false,
+        type: String,
+        description: 'Filter recipes created before this date (ISO format)'
+    })
+    @ApiQuery({
+        name: 'sortBy',
+        required: false,
+        enum: ['name', 'trendingScore', 'createdAt'],
+        description: 'Sort field (default: trendingScore)'
+    })
+    @ApiQuery({
+        name: 'sortOrder',
+        required: false,
+        enum: ['ASC', 'DESC'],
+        description: 'Sort order (default: DESC)'
+    })
     async getRecipes(
         @Query('limit') limit?: string,
         @Query('page') page?: string,

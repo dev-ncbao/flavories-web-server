@@ -16,16 +16,20 @@ module.exports = {
         );
 
         if (recipes.length === 0 || users.length === 0) {
-            console.log('No recipes or users found. Please seed recipes and users first.');
+            console.log(
+                'No recipes or users found. Please seed recipes and users first.'
+            );
             return;
         }
 
         const ratings = [];
-        
+
         // Each recipe gets 20-80 random ratings from different users
         for (const recipe of recipes) {
             const numberOfRatings = faker.number.int({ min: 20, max: 80 });
-            const selectedUsers = faker.helpers.shuffle([...users]).slice(0, numberOfRatings);
+            const selectedUsers = faker.helpers
+                .shuffle([...users])
+                .slice(0, numberOfRatings);
 
             for (const user of selectedUsers) {
                 const createdAt = faker.date.between({
@@ -58,7 +62,9 @@ module.exports = {
 
         await queryInterface.bulkInsert('ratings', ratings, {});
 
-        console.log(`✅ Successfully created ${ratings.length} ratings for ${recipes.length} recipes`);
+        console.log(
+            `✅ Successfully created ${ratings.length} ratings for ${recipes.length} recipes`
+        );
     },
 
     async down(queryInterface, Sequelize) {

@@ -49,7 +49,8 @@ module.exports = {
                 type: Sequelize.DECIMAL(10, 2),
                 defaultValue: 0.0,
                 allowNull: false,
-                comment: 'Calculated trending score based on rating, likes, views, comments'
+                comment:
+                    'Calculated trending score based on rating, likes, views, comments'
             },
             createdAt: {
                 allowNull: false,
@@ -63,7 +64,9 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
+        await queryInterface.sequelize.query(
+            'ALTER TABLE recipes AUTO_INCREMENT = 1;'
+        );
         await queryInterface.dropTable('recipes');
     }
 };
-

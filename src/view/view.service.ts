@@ -15,21 +15,16 @@ export class ViewService {
     constructor(@InjectModel(View) private viewModel: typeof View) {}
 
     async getViews(options: GetViewsOptions = {}): Promise<View[]> {
-        const {
-            limit = 10,
-            page = 1,
-            recipeId,
-            userId
-        } = options;
+        const { limit = 10, page = 1, recipeId, userId } = options;
 
         const offset = (page - 1) * limit;
 
         const whereClause: Record<string, number> = {};
-        
+
         if (recipeId !== undefined) {
             whereClause.recipeId = recipeId;
         }
-        
+
         if (userId !== undefined) {
             whereClause.userId = userId;
         }

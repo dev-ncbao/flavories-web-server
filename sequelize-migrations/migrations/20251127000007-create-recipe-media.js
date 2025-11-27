@@ -3,39 +3,37 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe-comments', {
+        await queryInterface.createTable('recipe_media', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            content: {
-                type: Sequelize.TEXT,
-                allowNull: false,
-                comment: 'Comment content'
-            },
-            userId: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                comment: 'User who wrote the comment'
-            },
             recipeId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                comment: 'Recipe being commented on'
+                comment: 'ID of the recipe this media belongs to'
             },
-            parentId: {
+            mediaTypeId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                comment: 'ID referencing media_types table (type of media)'
+            },
+            url: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                comment: 'URL to the media file'
+            },
+            altText: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                comment: 'Optional alt text or caption for the media'
+            },
+            sortOrder: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
-                comment:
-                    'Parent comment ID for nested replies (null for top-level comments)'
-            },
-            likeCount: {
-                type: Sequelize.INTEGER,
-                defaultValue: 0,
-                allowNull: false,
-                comment: 'Number of likes on this comment'
+                comment: 'Optional ordering index for multiple media items'
             },
             createdAt: {
                 allowNull: false,
@@ -49,9 +47,10 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
+        // reset auto-increment to 1 before dropping (keeps behavior consistent with seeders)
         await queryInterface.sequelize.query(
-            'ALTER TABLE recipe-comments AUTO_INCREMENT = 1;'
+            'ALTER TABLE recipe_media AUTO_INCREMENT = 1;'
         );
-        await queryInterface.dropTable('recipe-comments');
+        await queryInterface.dropTable('recipe_media');
     }
 };

@@ -43,42 +43,73 @@ module.exports = {
 
         for (let i = 0; i < 100; i++) {
             const dishName = faker.food.dish();
-            const adjectives = ['delicious', 'savory', 'mouth-watering', 'authentic', 'homemade', 'classic', 'traditional', 'flavorful', 'aromatic', 'tender'];
-            const preparationMethods = ['perfectly cooked', 'expertly prepared', 'carefully crafted', 'slow-cooked', 'freshly made', 'hand-crafted', 'traditionally prepared'];
-            
+            const adjectives = [
+                'delicious',
+                'savory',
+                'mouth-watering',
+                'authentic',
+                'homemade',
+                'classic',
+                'traditional',
+                'flavorful',
+                'aromatic',
+                'tender'
+            ];
+            const preparationMethods = [
+                'perfectly cooked',
+                'expertly prepared',
+                'carefully crafted',
+                'slow-cooked',
+                'freshly made',
+                'hand-crafted',
+                'traditionally prepared'
+            ];
+
             const adjective = faker.helpers.arrayElement(adjectives);
             const method = faker.helpers.arrayElement(preparationMethods);
             const description = `A ${adjective} ${dishName} recipe, ${method} with ${faker.food.ingredient()}, ${faker.food.ingredient()}, and ${faker.food.ingredient()}. ${faker.lorem.sentence()}`;
-            
+
             // Pick a random food image from the array
             const randomImage = faker.helpers.arrayElement(foodImages);
-            
-            const rating = parseFloat((faker.number.float({ min: 0, max: 5, fractionDigits: 1 })).toFixed(1));
+
+            const rating = parseFloat(
+                faker.number
+                    .float({ min: 0, max: 5, fractionDigits: 1 })
+                    .toFixed(1)
+            );
             const likeCount = faker.number.int({ min: 0, max: 1000 });
             const dislikeCount = faker.number.int({ min: 0, max: 100 });
             const viewCount = faker.number.int({ min: 100, max: 10000 });
             const commentCount = faker.number.int({ min: 0, max: 200 });
-            
+
             // Calculate trending score
             const ratingScore = rating * 20; // Max 100 points from rating
             const likeScore = likeCount * 0.1; // Likes contribute positively
             const dislikeScore = dislikeCount * -0.2; // Dislikes penalize
             const viewScore = viewCount * 0.01; // Views contribute
             const commentScore = commentCount * 0.5; // Comments show engagement
-            const trendingScore = parseFloat((ratingScore + likeScore + dislikeScore + viewScore + commentScore).toFixed(2));
-            
+            const trendingScore = parseFloat(
+                (
+                    ratingScore +
+                    likeScore +
+                    dislikeScore +
+                    viewScore +
+                    commentScore
+                ).toFixed(2)
+            );
+
             // Dynamic date calculation
             const now = new Date();
             const currentYear = now.getFullYear();
             const currentMonth = now.getMonth(); // 0-indexed (0 = January, 10 = November)
-            
+
             // First 50 recipes: created in current month
             // Remaining 50 recipes: created in previous 6 months
             let createdAt;
             if (i < 50) {
                 // Current month recipes
                 const startOfMonth = new Date(currentYear, currentMonth, 1);
-                createdAt = faker.date.between({ 
+                createdAt = faker.date.between({
                     from: startOfMonth,
                     to: now
                 });
@@ -86,18 +117,18 @@ module.exports = {
                 // Previous 6 months recipes
                 const sixMonthsAgo = new Date(currentYear, currentMonth - 6, 1);
                 const endOfLastMonth = new Date(currentYear, currentMonth, 0); // Last day of previous month
-                createdAt = faker.date.between({ 
+                createdAt = faker.date.between({
                     from: sixMonthsAgo,
                     to: endOfLastMonth
                 });
             }
-            
+
             // updatedAt is between createdAt and now
-            const updatedAt = faker.date.between({ 
-                from: createdAt, 
+            const updatedAt = faker.date.between({
+                from: createdAt,
                 to: now
             });
-            
+
             recipes.push({
                 name: dishName,
                 description: description,
@@ -131,4 +162,3 @@ module.exports = {
         );
     }
 };
-

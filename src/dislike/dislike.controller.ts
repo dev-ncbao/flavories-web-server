@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Delete, Body, Param, Query } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Delete,
+    Body,
+    Param,
+    Query
+} from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { DislikeService } from './dislike.service';
 import { DislikeDto, CreateDislikeDto } from './dislike.dto';
@@ -9,10 +17,30 @@ export class DislikeController {
     constructor(private dislikeService: DislikeService) {}
 
     @Get()
-    @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of dislikes per page (default: 10)' })
-    @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number (default: 1)' })
-    @ApiQuery({ name: 'recipeId', required: false, type: Number, description: 'Filter by recipe ID' })
-    @ApiQuery({ name: 'userId', required: false, type: Number, description: 'Filter by user ID' })
+    @ApiQuery({
+        name: 'limit',
+        required: false,
+        type: Number,
+        description: 'Number of dislikes per page (default: 10)'
+    })
+    @ApiQuery({
+        name: 'page',
+        required: false,
+        type: Number,
+        description: 'Page number (default: 1)'
+    })
+    @ApiQuery({
+        name: 'recipeId',
+        required: false,
+        type: Number,
+        description: 'Filter by recipe ID'
+    })
+    @ApiQuery({
+        name: 'userId',
+        required: false,
+        type: Number,
+        description: 'Filter by user ID'
+    })
     async getDislikes(
         @Query('limit') limit?: string,
         @Query('page') page?: string,
@@ -38,15 +66,21 @@ export class DislikeController {
     }
 
     @Get('recipe/:recipeId/count')
-    async getDislikeCount(@Param('recipeId') recipeId: string): Promise<{ count: number }> {
-        const count = await this.dislikeService.getDislikeCount(parseInt(recipeId, 10));
+    async getDislikeCount(
+        @Param('recipeId') recipeId: string
+    ): Promise<{ count: number }> {
+        const count = await this.dislikeService.getDislikeCount(
+            parseInt(recipeId, 10)
+        );
         return { count };
     }
 
     @Get(':id')
     async getDislikeById(@Param('id') id: string): Promise<DislikeDto> {
-        const dislike = await this.dislikeService.getDislikeById(parseInt(id, 10));
-        
+        const dislike = await this.dislikeService.getDislikeById(
+            parseInt(id, 10)
+        );
+
         if (!dislike) {
             throw new Error('Dislike not found');
         }
@@ -61,8 +95,11 @@ export class DislikeController {
     }
 
     @Post()
-    async createDislike(@Body() createDislikeDto: CreateDislikeDto): Promise<DislikeDto> {
-        const dislike = await this.dislikeService.createDislike(createDislikeDto);
+    async createDislike(
+        @Body() createDislikeDto: CreateDislikeDto
+    ): Promise<DislikeDto> {
+        const dislike =
+            await this.dislikeService.createDislike(createDislikeDto);
 
         return {
             id: Number(dislike.id),

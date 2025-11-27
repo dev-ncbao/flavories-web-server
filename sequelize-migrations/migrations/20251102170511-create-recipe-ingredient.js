@@ -28,7 +28,9 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
+        await queryInterface.sequelize.query(
+            'ALTER TABLE recipe_ingredients AUTO_INCREMENT = 1;'
+        );
         await queryInterface.dropTable('recipe_ingredients');
     }
 };
-

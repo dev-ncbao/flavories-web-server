@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('likes', {
+        await queryInterface.createTable('recipe-likes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -32,6 +32,9 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('likes');
+        await queryInterface.sequelize.query(
+            'ALTER TABLE recipe-likes AUTO_INCREMENT = 1;'
+        );
+        await queryInterface.dropTable('recipe-likes');
     }
 };

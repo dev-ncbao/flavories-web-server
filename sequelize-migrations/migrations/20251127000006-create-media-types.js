@@ -1,8 +1,9 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('roles', {
+        await queryInterface.createTable('media_types', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -10,7 +11,14 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             name: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false,
+                comment: 'Media type name, e.g. image, video, gif'
+            },
+            description: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                comment: 'Optional description of the media type'
             },
             createdAt: {
                 allowNull: false,
@@ -22,10 +30,12 @@ module.exports = {
             }
         });
     },
+
     async down(queryInterface, Sequelize) {
+        // reset auto-increment to 1 before dropping (keeps behavior consistent with seeders)
         await queryInterface.sequelize.query(
-            'ALTER TABLE roles AUTO_INCREMENT = 1;'
+            'ALTER TABLE media_types AUTO_INCREMENT = 1;'
         );
-        await queryInterface.dropTable('roles');
+        await queryInterface.dropTable('media_types');
     }
 };

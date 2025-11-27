@@ -33,9 +33,11 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
+        await queryInterface.sequelize.query(
+            'ALTER TABLE users AUTO_INCREMENT = 1;'
+        );
         await queryInterface.dropTable('users');
     }
 };
 
 // bunx sequelize-cli model:create --name user --attributes firstName:string,lastName:string,email:string,passwordHashed:string,avatarUrl:string,bio:string,role:integer
-

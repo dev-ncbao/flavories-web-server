@@ -15,21 +15,16 @@ export class LikeService {
     constructor(@InjectModel(Like) private likeModel: typeof Like) {}
 
     async getLikes(options: GetLikesOptions = {}): Promise<Like[]> {
-        const {
-            limit = 10,
-            page = 1,
-            recipeId,
-            userId
-        } = options;
+        const { limit = 10, page = 1, recipeId, userId } = options;
 
         const offset = (page - 1) * limit;
 
         const whereClause: Record<string, number> = {};
-        
+
         if (recipeId !== undefined) {
             whereClause.recipeId = recipeId;
         }
-        
+
         if (userId !== undefined) {
             whereClause.userId = userId;
         }
@@ -48,7 +43,10 @@ export class LikeService {
         return await this.likeModel.findByPk(id);
     }
 
-    async getLikeByUserAndRecipe(userId: number, recipeId: number): Promise<Like> {
+    async getLikeByUserAndRecipe(
+        userId: number,
+        recipeId: number
+    ): Promise<Like> {
         return await this.likeModel.findOne({
             where: { userId, recipeId }
         });
