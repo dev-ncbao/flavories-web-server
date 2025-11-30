@@ -24,6 +24,7 @@ module.exports = {
                 recipeIngredients.push({
                     recipeId: i,
                     ingredientId: j,
+                    amount: (Math.random() * 500 + 1).toFixed(2),
                     createdAt: new Date(),
                     updatedAt: new Date()
                 });

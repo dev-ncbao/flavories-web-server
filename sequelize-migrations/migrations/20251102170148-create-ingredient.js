@@ -13,6 +13,11 @@ module.exports = {
             name: {
                 type: Sequelize.STRING
             },
+            unitId: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                comment: 'Default unit for this ingredient'
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

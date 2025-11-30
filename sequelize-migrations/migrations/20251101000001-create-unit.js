@@ -3,22 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe_views', {
+        await queryInterface.createTable('units', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            userId: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-                comment: 'User who viewed the recipe (null for anonymous views)'
-            },
-            recipeId: {
-                type: Sequelize.INTEGER,
+            name: {
+                type: Sequelize.STRING,
                 allowNull: false,
-                comment: 'Recipe being viewed'
+                comment: 'Unit name (e.g., cup, tablespoon, gram)'
+            },
+            abbreviation: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                comment: 'Unit abbreviation (e.g., c, tbsp, g)'
             },
             createdAt: {
                 allowNull: false,
@@ -32,9 +32,7 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.sequelize.query(
-            'ALTER TABLE recipe_views AUTO_INCREMENT = 1;'
-        );
-        await queryInterface.dropTable('recipe_views');
+        await queryInterface.sequelize.query('ALTER TABLE units AUTO_INCREMENT = 1;');
+        await queryInterface.dropTable('units');
     }
 };

@@ -69,9 +69,9 @@ module.exports = {
                 recipeId: recipe.id,
                 mediaTypeId: mediaTypeIds[1] || mediaTypeIds[0], // video or fallback to image
                 url: faker.helpers.arrayElement([
-                    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                    'https://videos.pexels.com/video.mp4',
-                    'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4'
+                    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
                 ]),
                 altText: faker.lorem.words(2),
                 sortOrder: 1,

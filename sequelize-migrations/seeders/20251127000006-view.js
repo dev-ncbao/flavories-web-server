@@ -51,7 +51,7 @@ module.exports = {
             }
         }
 
-        await queryInterface.bulkInsert('views', views, {});
+        await queryInterface.bulkInsert('recipe_views', views, {});
 
         console.log(
             `✅ Successfully created ${views.length} views for ${recipes.length} recipes`
@@ -59,10 +59,10 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('views', null, {});
+        await queryInterface.bulkDelete('recipe_views', null, {});
 
         await queryInterface.sequelize.query(
-            'ALTER TABLE views AUTO_INCREMENT = 1;'
+            'ALTER TABLE recipe_views AUTO_INCREMENT = 1;'
         );
     }
 };

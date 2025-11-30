@@ -15,11 +15,19 @@ module.exports = {
          * }], {});
          */
 
+        // Get all unit IDs
+        const units = await queryInterface.sequelize.query(
+            'SELECT id FROM units',
+            { type: Sequelize.QueryTypes.SELECT }
+        );
+        const unitIds = units.map(u => u.id);
+
         const ingredients = [];
 
         for (let i = 0; i < 30; i++) {
             ingredients.push({
                 name: faker.food.ingredient(),
+                unitId: faker.helpers.arrayElement(unitIds),
                 createdAt: new Date(),
                 updatedAt: new Date()
             });

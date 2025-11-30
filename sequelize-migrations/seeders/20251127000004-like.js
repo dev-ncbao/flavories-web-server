@@ -46,7 +46,7 @@ module.exports = {
             }
         }
 
-        await queryInterface.bulkInsert('likes', likes, {});
+        await queryInterface.bulkInsert('recipe_likes', likes, {});
 
         console.log(
             `✅ Successfully created ${likes.length} likes for ${recipes.length} recipes`
@@ -54,10 +54,10 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('likes', null, {});
+        await queryInterface.bulkDelete('recipe_likes', null, {});
 
         await queryInterface.sequelize.query(
-            'ALTER TABLE likes AUTO_INCREMENT = 1;'
+            'ALTER TABLE recipe_likes AUTO_INCREMENT = 1;'
         );
     }
 };

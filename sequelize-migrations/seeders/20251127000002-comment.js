@@ -111,7 +111,7 @@ module.exports = {
             }
         }
 
-        await queryInterface.bulkInsert('comments', comments, {});
+        await queryInterface.bulkInsert('recipe_comments', comments, {});
 
         console.log(
             `✅ Successfully created ${comments.length} comments for ${recipes.length} recipes`
@@ -119,10 +119,10 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('comments', null, {});
+        await queryInterface.bulkDelete('recipe_comments', null, {});
 
         await queryInterface.sequelize.query(
-            'ALTER TABLE comments AUTO_INCREMENT = 1;'
+            'ALTER TABLE recipe_comments AUTO_INCREMENT = 1;'
         );
     }
 };

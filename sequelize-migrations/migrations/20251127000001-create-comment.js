@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe-comments', {
+        await queryInterface.createTable('recipe_comments', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -50,8 +50,8 @@ module.exports = {
 
     async down(queryInterface, Sequelize) {
         await queryInterface.sequelize.query(
-            'ALTER TABLE recipe-comments AUTO_INCREMENT = 1;'
+            'ALTER TABLE recipe_comments AUTO_INCREMENT = 1;'
         );
-        await queryInterface.dropTable('recipe-comments');
+        await queryInterface.dropTable('recipe_comments');
     }
 };
