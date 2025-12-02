@@ -1,6 +1,6 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
-@Table
+@Table({ tableName: 'recipe_dislikes', timestamps: true })
 export class Dislike extends Model {
     @Column
     userId: number;

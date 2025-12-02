@@ -1,6 +1,6 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
-@Table
+@Table({ tableName: 'recipe_likes', timestamps: true })
 export class Like extends Model {
     @Column
     userId: number;

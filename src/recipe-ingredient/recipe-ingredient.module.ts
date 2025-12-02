@@ -5,8 +5,8 @@ import { RecipeIngredientService } from './recipe-ingredient.service';
 import { RecipeIngredientController } from './recipe-ingredient.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([RecipeIngredient])],
-  providers: [RecipeIngredientService],
-  controllers: [RecipeIngredientController],
+    imports: [SequelizeModule.forFeature([RecipeIngredient])],
+    providers: [RecipeIngredientService],
+    controllers: [RecipeIngredientController]
 })
 export class RecipeIngredientModule {}

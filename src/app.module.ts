@@ -13,6 +13,8 @@ import { LikeModule } from './like/like.module';
 import { DislikeModule } from './dislike/dislike.module';
 import { ViewModule } from './view/view.module';
 import { ConfigModule } from '@nestjs/config';
+import { RecipeIngredientModule } from './recipe-ingredient/recipe-ingredient.module';
+import { UnitModule } from './unit/unit.module';
 
 @Module({
     imports: [
@@ -37,7 +39,9 @@ import { ConfigModule } from '@nestjs/config';
         RatingModule,
         LikeModule,
         DislikeModule,
-        ViewModule
+        ViewModule,
+        RecipeIngredientModule,
+        UnitModule
     ],
     controllers: [AppController],
     providers: [AppService]

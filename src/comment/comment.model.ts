@@ -1,6 +1,6 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
-@Table
+@Table({ tableName: 'recipe_comments', timestamps: true })
 export class Comment extends Model {
     @Column
     content: string;

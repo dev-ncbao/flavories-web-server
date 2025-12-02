@@ -13,4 +13,10 @@ export class RecipeIngredient extends Model {
   getIngredientId(): number | null {
     return this.getDataValue('ingredientId') as number | null;
   }
+
+  @Column
+  amount: number;
+  getAmount(): number | null {
+    return this.getDataValue('amount') as number | null;
+  }
 }
