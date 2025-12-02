@@ -19,4 +19,8 @@ export class RecipeIngredient extends Model {
   getAmount(): number | null {
     return this.getDataValue('amount') as number | null;
   }
+
+  getId(): number {
+    return this.getDataValue('id') as number;
+  }
 }

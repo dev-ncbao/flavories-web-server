@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { RecipeIngredientService } from './recipe-ingredient.service';
 import { RecipeIngredientDto } from './recipe-ingredient.dto';
 
-@Controller('recipe-ingredient')
+@Controller('recipe-ingredients')
 export class RecipeIngredientController {
     constructor(private readonly service: RecipeIngredientService) {}
 
