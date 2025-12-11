@@ -1,0 +1,258 @@
+# Flavories Web Server - Cursor Rules
+
+## Project Overview
+This is a NestJS backend API using Sequelize ORM with MySQL database. The project follows a modular architecture with feature-based organization.
+
+## Tech Stack
+- **Framework**: NestJS 11.x
+- **ORM**: Sequelize 6.x with sequelize-typescript
+- **Database**: MySQL (mysql2 driver)
+- **Authentication**: JWT with Passport
+- **Documentation**: Swagger/OpenAPI
+- **Language**: TypeScript (ES2023)
+- **Node**: >=20.0.0
+
+## Project Structure
+
+### Directory Organization
+- `src/` - Main source code
+  - Each feature has its own module directory (e.g., `users/`, `recipe/`, `auth/`)
+  - Each module contains: `*.module.ts`, `*.controller.ts`, `*.service.ts`, `*.model.ts`, `*.dto.ts`
+  - `common/` - Shared utilities and types
+- `sequelize-migrations/` - Database migrations, seeders, and CLI models
+  - `migrations/` - Migration files
+  - `seeders/` - Seeder files
+  - `models/` - Sequelize CLI models (separate from src models)
+  - `config/` - Sequelize CLI configuration
+
+### File Naming Conventions
+- **Modules**: `*.module.ts` (e.g., `user.module.ts`)
+- **Controllers**: `*.controller.ts` (e.g., `user.controller.ts`)
+- **Services**: `*.service.ts` (e.g., `user.service.ts`)
+- **Models**: `*.model.ts` (e.g., `user.model.ts`)
+- **DTOs**: `*.dto.ts` (e.g., `user.dto.ts`)
+- **Guards**: `*.guard.ts` (e.g., `jwt-auth.guard.ts`)
+- **Strategies**: `*.strategy.ts` or `*.stratergy.ts` (note: typo in existing code)
+- **Types**: `*.ts` in `common/types/` (e.g., `authenticated-user.ts`)
+- **Utils**: `*.utils.ts` in `common/utils/` (e.g., `email.utils.ts`)
+
+## Code Patterns & Conventions
+
+### NestJS Module Pattern
+```typescript
+@Module({
+    imports: [SequelizeModule.forFeature([ModelName])],
+    controllers: [ControllerName],
+    providers: [ServiceName],
+    exports: [ServiceName] // If service is used in other modules
+})
+export class FeatureModule {}
+```
+
+### Sequelize Models
+- Use `sequelize-typescript` decorators: `@Table`, `@Column`
+- Models extend `Model` from `sequelize-typescript`
+- Use getter methods for accessing data values (e.g., `getEmail()`, `getUsername()`)
+- Table names can be explicitly set: `@Table({ tableName: 'table_name', timestamps: true })`
+- Models are registered in modules via `SequelizeModule.forFeature([Model])`
+
+### Service Pattern
+- Services are `@Injectable()` classes
+- Inject models using `@InjectModel(ModelName) private modelName: typeof ModelName`
+- Use async/await for all database operations
+- Return `Promise<Model | null>` for find operations
+- Return `Promise<void>` for create/update operations that don't need to return data
+- Use bcrypt for password hashing (salt rounds: 10)
+
+### Controller Pattern
+- Controllers use `@Controller('route-prefix')`
+- Use `@UseGuards(JwtAuthGuard)` for protected routes
+- Use `@ApiBearerAuth('accessToken')` for Swagger documentation
+- Inject services via constructor
+- Use `@Request() req: AuthenticatedRequest` for authenticated endpoints
+- Access user via `req.user.id`
+- Return DTOs, not raw models
+
+### DTO Pattern
+- Create separate DTO classes for requests and responses
+- Use `@ApiProperty()` decorator for Swagger documentation on request DTOs
+- DTOs are plain classes (not interfaces) for runtime validation
+- Optional fields use `?:` operator
+- Response DTOs should not include sensitive data (passwords, etc.)
+
+### Authentication
+- JWT authentication using `@nestjs/jwt` and `passport-jwt`
+- JWT payload contains `{ sub: number }` where `sub` is the user ID
+- Use `JwtAuthGuard` for protected routes
+- Custom request type: `AuthenticatedRequest extends Request { user: AuthUser }`
+- `AuthUser` interface: `{ id: number }`
+
+### Error Handling
+- Use NestJS built-in exceptions:
+  - `BadRequestException` for validation errors
+  - `UnauthorizedException` for authentication failures
+  - `ConflictException` for duplicate resources (e.g., existing email/username)
+  - `NotFoundException` for missing resources
+- Validation errors can return arrays of messages: `throw new BadRequestException([...messages])`
+
+### Database Configuration
+- Use environment variables via `ConfigService` for database credentials
+- Environment variables: `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, `DB_DATABASE`
+- Default values provided for backward compatibility
+- `synchronize: false` - Always use migrations, never auto-sync in production
+- `autoLoadModels: true` - Automatically load models from modules
+
+### Migrations & Database
+- Use `sequelize-cli` for migrations (not TypeORM migrations)
+- Migration files in `sequelize-migrations/migrations/`
+- Config in `sequelize-migrations/config/config.json`
+- Use `.sequelizerc` for CLI path configuration
+- Available scripts:
+  - `npm run db:migrate` - Run pending migrations
+  - `npm run db:migrate:undo` - Undo last migration
+  - `npm run db:seed` - Run seeders
+  - `npm run db:create` - Create database
+
+## Code Style
+
+### TypeScript
+- Use explicit types for function parameters and return types
+- Prefer `Promise<Type>` over `Promise<Type | null>` when null is possible
+- Use `type` for type aliases, `interface` for object shapes that might be extended
+- Use `as` type assertions sparingly, prefer proper typing
+- Use optional chaining (`?.`) when accessing potentially undefined properties
+
+### Naming
+- **Classes**: PascalCase (e.g., `UserService`, `RecipeController`)
+- **Files**: kebab-case (e.g., `user.service.ts`, `recipe.controller.ts`)
+- **Variables/Functions**: camelCase (e.g., `findOneByUsername`, `userService`)
+- **Constants**: UPPER_SNAKE_CASE (if needed)
+- **Database tables**: snake_case (e.g., `recipe_ingredients`)
+- **Database columns**: camelCase in models, but can map to snake_case in DB
+
+### Imports
+- Use absolute imports with `baseUrl: "./"` in tsconfig
+- Import order: External packages → NestJS → Local modules
+- Group imports logically
+- Use type imports when appropriate: `import type { Type } from '...'`
+
+### Code Formatting
+- Use Prettier for formatting
+- Use 4 spaces for indentation (check existing code)
+- Use single quotes for strings (check existing code)
+- Trailing commas in multi-line objects/arrays
+- Semicolons at end of statements
+
+## Security Best Practices
+
+### Authentication & Authorization
+- Always hash passwords using bcrypt before storing
+- Never return password hashes in API responses
+- Use JWT for stateless authentication
+- Protect routes with guards
+- Validate user input in services, not just DTOs
+
+### Data Validation
+- Validate all user inputs
+- Check for duplicate emails/usernames before creation
+- Use email validation utilities (`isValidEmail` from `common/utils/email.utils`)
+- Validate password confirmation matches password
+
+### Database
+- Use parameterized queries (Sequelize handles this)
+- Never expose database credentials in code (use environment variables)
+- Use migrations for schema changes (never manual SQL in production)
+
+## API Design
+
+### RESTful Conventions
+- Use appropriate HTTP methods: GET, POST, PUT, PATCH, DELETE
+- Use plural nouns for resource endpoints: `/users`, `/recipes`, `/comments`
+- Nested resources: `/recipes/:id/comments`
+- Use status codes appropriately: 200, 201, 400, 401, 404, 409, 500
+
+### Swagger Documentation
+- Document all endpoints with `@ApiTags()`, `@ApiOperation()`, `@ApiResponse()`
+- Use `@ApiBearerAuth('accessToken')` for protected endpoints
+- Document request/response DTOs with `@ApiProperty()`
+- Swagger available at `/api` endpoint
+
+### CORS
+- CORS enabled for `http://localhost:5555` (frontend)
+- Configure in `main.ts` via `app.enableCors()`
+
+## Testing (Guidelines)
+- Unit tests: `*.spec.ts` files alongside source files
+- E2E tests: `test/` directory
+- Use Jest as testing framework
+- Mock database operations in unit tests
+- Test services, not just controllers
+
+## Common Utilities
+
+### Email Validation
+- Use `isValidEmail()` from `src/common/utils/email.utils.ts`
+- Check if identifier is email vs username before database queries
+
+### Type Utilities
+- `AuthenticatedRequest` - Request type with authenticated user
+- `AuthUser` - User object in JWT payload: `{ id: number }`
+
+## Development Workflow
+
+### Environment Setup
+- Create `.env` file with database credentials (not committed)
+- Use `.env.example` as template (if exists)
+- Ensure `.env` is in `.gitignore`
+
+### Running the Application
+- Development: `npm run start:dev`
+- Production build: `npm run build` then `npm run start:prod`
+- Debug mode: `npm run start:debug`
+
+### Database Management
+- Always create migrations for schema changes
+- Test migrations in development before applying to production
+- Use seeders for initial data (roles, genders, etc.)
+- Never modify existing migrations (create new ones for changes)
+
+## Code Quality
+
+### Linting
+- ESLint configured with TypeScript rules
+- Prettier for code formatting
+- Run `npm run lint` before committing
+- Ignore `sequelize-migrations/` directory in linting
+
+### Best Practices
+- Keep services focused on business logic
+- Keep controllers thin (delegate to services)
+- Use dependency injection (NestJS handles this)
+- Avoid circular dependencies between modules
+- Export services that are used in other modules
+- Use async/await, avoid promise chains
+- Handle errors appropriately (don't swallow exceptions)
+
+## When Adding New Features
+
+1. Create module directory: `src/feature-name/`
+2. Create model: `feature-name.model.ts` with `@Table` decorator
+3. Create DTO: `feature-name.dto.ts` for request/response
+4. Create service: `feature-name.service.ts` with `@Injectable()`
+5. Create controller: `feature-name.controller.ts` with `@Controller()`
+6. Create module: `feature-name.module.ts` and register all components
+7. Import module in `app.module.ts`
+8. Create migration if schema changes needed
+9. Add Swagger documentation
+10. Add authentication guards if needed
+
+## Important Notes
+
+- Models use getter methods pattern (e.g., `getEmail()`, `getUsername()`) instead of direct property access
+- Password field is named `passwordHashed` in User model
+- JWT strategy file has typo: `jwt.stratergy.ts` (keep for consistency, but new files should use `strategy.ts`)
+- Use `sequelize-typescript` decorators, not raw Sequelize
+- Database credentials are in environment variables, not hardcoded
+- Always use migrations for database schema changes
+- `autoLoadModels: true` automatically discovers models from modules
+

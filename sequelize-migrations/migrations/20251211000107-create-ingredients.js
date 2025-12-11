@@ -4,19 +4,19 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('ingredients', {
-            id: {
-                allowNull: false,
-                autoIncrement: true,
+            ingredientId: {
+                type: Sequelize.INTEGER,
                 primaryKey: true,
-                type: Sequelize.INTEGER
-            },
-            name: {
-                type: Sequelize.STRING
+                autoIncrement: true,
+                allowNull: false
             },
             unitId: {
                 type: Sequelize.INTEGER,
-                allowNull: true,
-                comment: 'Default unit for this ingredient'
+                allowNull: true
+            },
+            name: {
+                type: Sequelize.TEXT,
+                allowNull: false
             },
             createdAt: {
                 allowNull: false,
@@ -29,10 +29,8 @@ module.exports = {
         });
     },
 
-    async down(queryInterface, Sequelize) {
-        await queryInterface.sequelize.query(
-            'ALTER TABLE ingredients AUTO_INCREMENT = 1;'
-        );
+    async down(queryInterface) {
         await queryInterface.dropTable('ingredients');
     }
 };
+

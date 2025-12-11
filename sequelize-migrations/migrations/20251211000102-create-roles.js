@@ -1,16 +1,18 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('roles', {
-            id: {
-                allowNull: false,
-                autoIncrement: true,
+            roleId: {
+                type: Sequelize.INTEGER,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                autoIncrement: true,
+                allowNull: false
             },
             name: {
-                type: Sequelize.STRING
+                type: Sequelize.TEXT,
+                allowNull: false
             },
             createdAt: {
                 allowNull: false,
@@ -22,10 +24,9 @@ module.exports = {
             }
         });
     },
-    async down(queryInterface, Sequelize) {
-        await queryInterface.sequelize.query(
-            'ALTER TABLE roles AUTO_INCREMENT = 1;'
-        );
+
+    async down(queryInterface) {
         await queryInterface.dropTable('roles');
     }
 };
+

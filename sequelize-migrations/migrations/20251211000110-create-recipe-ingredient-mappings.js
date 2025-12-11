@@ -3,22 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe_likes', {
-            id: {
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true,
-                type: Sequelize.INTEGER
-            },
-            userId: {
+        await queryInterface.createTable('recipe_ingredient_mappings', {
+            ingredientId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                comment: 'User who liked the recipe'
+                primaryKey: true
             },
             recipeId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                comment: 'Recipe being liked'
+                primaryKey: true
+            },
+            amount: {
+                type: Sequelize.DECIMAL(10, 2),
+                allowNull: true
             },
             createdAt: {
                 allowNull: false,
@@ -31,10 +29,8 @@ module.exports = {
         });
     },
 
-    async down(queryInterface, Sequelize) {
-        await queryInterface.sequelize.query(
-            'ALTER TABLE recipe_likes AUTO_INCREMENT = 1;'
-        );
-        await queryInterface.dropTable('recipe_likes');
+    async down(queryInterface) {
+        await queryInterface.dropTable('recipe_ingredient_mappings');
     }
 };
+

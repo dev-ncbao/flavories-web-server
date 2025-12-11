@@ -16,7 +16,15 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/jest/bin/jest --runInBand",
-        "test:e2e": "jest --config ./test/jest-e2e.json"
+        "test:e2e": "jest --config ./test/jest-e2e.json",
+        "db:migrate": "sequelize-cli db:migrate",
+        "db:migrate:undo": "sequelize-cli db:migrate:undo",
+        "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
+        "db:migrate:status": "sequelize-cli db:migrate:status",
+        "db:seed": "sequelize-cli db:seed:all",
+        "db:seed:undo": "sequelize-cli db:seed:undo:all",
+        "db:create": "sequelize-cli db:create",
+        "db:drop": "sequelize-cli db:drop"
     },
     "engines": {
         "npm": ">=10.0.0",

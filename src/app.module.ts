@@ -12,7 +12,7 @@ import { RatingModule } from './rating/rating.module';
 import { LikeModule } from './like/like.module';
 import { DislikeModule } from './dislike/dislike.module';
 import { ViewModule } from './view/view.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RecipeIngredientModule } from './recipe-ingredient/recipe-ingredient.module';
 import { UnitModule } from './unit/unit.module';
 
@@ -21,14 +21,18 @@ import { UnitModule } from './unit/unit.module';
         ConfigModule.forRoot({
             isGlobal: true
         }),
-        SequelizeModule.forRoot({
-            dialect: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'sa',
-            password: '1111',
-            database: 'flavories',
-            autoLoadModels: true
+        SequelizeModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                dialect: 'mysql',
+                host: configService.get<string>('DB_HOST', 'localhost'),
+                port: configService.get<number>('DB_PORT', 3306),
+                username: configService.get<string>('DB_USERNAME', 'sa'),
+                password: configService.get<string>('DB_PASSWORD', '1111'),
+                database: configService.get<string>('DB_DATABASE', 'flavories'),
+                autoLoadModels: true,
+                synchronize: false // Keep false in production, use migrations instead
+            })
         }),
         MediaTypesModule,
         RecipeMediaModule,
