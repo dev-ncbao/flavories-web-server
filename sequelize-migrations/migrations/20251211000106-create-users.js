@@ -27,12 +27,12 @@ module.exports = {
                 allowNull: false
             },
             email: {
-                type: Sequelize.TEXT,
+                type: Sequelize.STRING(255),
                 allowNull: false,
                 unique: true
             },
             username: {
-                type: Sequelize.TEXT,
+                type: Sequelize.STRING(255),
                 allowNull: false,
                 unique: true
             },
