@@ -1,10 +1,11 @@
 'use strict';
+const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface) {
         const now = new Date();
-        const passwordHash = '$2b$10$CwTycUXWue0Thq9StjUM0uJ8rq2bOMfOeXtfLOcAfeUeawuO/7d4.'; // bcrypt hash for "password"
+        const passwordHash = bcrypt.hashSync('password', 10); // bcrypt hash for "password"
         const users = [
             {
                 userId: 1,
@@ -64,7 +65,7 @@ module.exports = {
             },
             {
                 userId: 5,
-                genderId: 3,
+                genderId: 2,
                 roleId: 3,
                 firstName: 'Evan',
                 lastName: 'Lee',
@@ -435,4 +436,3 @@ module.exports = {
         await queryInterface.bulkDelete('users', null, {});
     }
 };
-

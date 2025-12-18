@@ -14,12 +14,12 @@ export class UserService {
         username: string,
         password: string
     ): Promise<void> {
-        await User.create({
+        await this.userModel.create({
             firstName,
             lastName,
             email,
             username,
-            passwordHashed: await bcrypt.hash(password, 10)
+            password: await bcrypt.hash(password, 10)
         });
     }
 
@@ -65,10 +65,7 @@ export class UserService {
             return null;
         }
 
-        const isMatched = await bcrypt.compare(
-            password,
-            /* user.get('password') */ user?.getPasswordHashed()
-        );
+        const isMatched = await bcrypt.compare(password, user.dataValues.password);
 
         return isMatched ? user : null;
     }
@@ -87,10 +84,7 @@ export class UserService {
             return null;
         }
 
-        const isMatched = await bcrypt.compare(
-            password,
-            /* user.get('password') */ user?.getPasswordHashed()
-        );
+        const isMatched = await bcrypt.compare(password, user.dataValues.password);
 
         return isMatched ? user : null;
     }
@@ -98,7 +92,7 @@ export class UserService {
     async findOneById(id: number): Promise<User> {
         const user = await this.userModel.findOne({
             where: {
-                id: id
+                userId: id
             }
         });
 

@@ -10,8 +10,8 @@ module.exports = {
                 { reactionTypeId: 1, recipeId: 1, userId: 4, createdAt: now, updatedAt: now },
                 { reactionTypeId: 2, recipeId: 2, userId: 5, createdAt: now, updatedAt: now },
                 { reactionTypeId: 1, recipeId: 3, userId: 4, createdAt: now, updatedAt: now },
-                { reactionTypeId: 3, recipeId: 4, userId: 5, createdAt: now, updatedAt: now },
-                { reactionTypeId: 4, recipeId: 5, userId: 4, createdAt: now, updatedAt: now }
+                { reactionTypeId: 2, recipeId: 4, userId: 5, createdAt: now, updatedAt: now },
+                { reactionTypeId: 1, recipeId: 5, userId: 4, createdAt: now, updatedAt: now }
             ],
             {}
         );

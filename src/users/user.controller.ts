@@ -15,16 +15,14 @@ export class UserController {
     async getProfile(@Request() req: AuthenticatedRequest) {
         const foundUser = await this.userService.findOneById(req.user.id);
 
-        console.log('Found user for profile:', foundUser);
-
         const response: UserDto = {
-            email: foundUser.getEmail(),
-            username: foundUser.getUsername(),
-            firstName: foundUser.getFirstName(),
-            lastName: foundUser.getLastName(),
-            gender: foundUser.getGender(),
-            avatarUrl: foundUser.getAvatarUrl(),
-            bio: foundUser.getBio()
+            email: foundUser.dataValues.email,
+            username: foundUser.dataValues.username,
+            firstName: foundUser.dataValues.firstName,
+            lastName: foundUser.dataValues.lastName,
+            genderId: foundUser.dataValues.genderId,
+            avatarUrl: foundUser.dataValues.avatarUrl,
+            bio: foundUser.dataValues.bio
         };
 
         return response;

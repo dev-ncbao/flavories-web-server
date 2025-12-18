@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "NestJS: Launch (bun start:debug)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "bun",
+            "runtimeArgs": ["run", "start:debug"],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "restart": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "NestJS: Attach to running debug",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "restart": false,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ]
+}
+

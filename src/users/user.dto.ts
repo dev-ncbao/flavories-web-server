@@ -4,7 +4,7 @@ export class UserDto {
     username?: string;
     firstName?: string;
     lastName?: string;
-    gender?: number;
+    genderId?: number;
     avatarUrl?: string;
     bio?: string;
 }
