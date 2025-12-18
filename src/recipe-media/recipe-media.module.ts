@@ -5,8 +5,8 @@ import { RecipeMediaService } from './recipe-media.service';
 import { RecipeMediaController } from './recipe-media.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([RecipeMedia])],
-  providers: [RecipeMediaService],
-  controllers: [RecipeMediaController],
+    imports: [SequelizeModule.forFeature([RecipeMedia])],
+    providers: [RecipeMediaService],
+    controllers: [RecipeMediaController]
 })
 export class RecipeMediaModule {}

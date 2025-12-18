@@ -5,8 +5,8 @@ import { IngredientService } from './ingredient.service';
 import { IngredientController } from './ingredient.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Ingredient])],
-  providers: [IngredientService],
-  controllers: [IngredientController],
+    imports: [SequelizeModule.forFeature([Ingredient])],
+    providers: [IngredientService],
+    controllers: [IngredientController]
 })
 export class IngredientModule {}

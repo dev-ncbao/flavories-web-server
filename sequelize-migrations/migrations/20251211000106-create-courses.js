@@ -3,15 +3,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipes', {
-            recipeId: {
+        await queryInterface.createTable('courses', {
+            courseId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false
             },
+            videoUrl: {
+                type: Sequelize.TEXT,
+                allowNull: true
+            },
+            thumbnailUrl: {
+                type: Sequelize.TEXT,
+                allowNull: true
+            },
             userId: {
                 type: Sequelize.INTEGER,
+                references: {
+                    model: 'users',
+                    key: 'userId'
+                },
                 allowNull: false
             },
             name: {
@@ -19,10 +31,6 @@ module.exports = {
                 allowNull: false
             },
             description: {
-                type: Sequelize.TEXT,
-                allowNull: true
-            },
-            thumbnailUrl: {
                 type: Sequelize.TEXT,
                 allowNull: true
             },
@@ -38,7 +46,7 @@ module.exports = {
     },
 
     async down(queryInterface) {
-        await queryInterface.dropTable('recipes');
+        await queryInterface.dropTable('courses');
     }
 };
 

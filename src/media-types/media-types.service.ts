@@ -5,28 +5,34 @@ import { MediaTypesDto } from './media-types.dto';
 
 @Injectable()
 export class MediaTypesService {
-  constructor(
-    @InjectModel(MediaTypes)
-    private mediaTypesModel: typeof MediaTypes,
-  ) {}
+    constructor(
+        @InjectModel(MediaTypes)
+        private mediaTypesModel: typeof MediaTypes
+    ) {}
 
-  async findAll(): Promise<MediaTypes[]> {
-    return this.mediaTypesModel.findAll();
-  }
+    async findAll(): Promise<MediaTypes[]> {
+        return this.mediaTypesModel.findAll();
+    }
 
-  async findOne(id: number): Promise<MediaTypes | null> {
-    return this.mediaTypesModel.findByPk(id);
-  }
+    async findOne(id: number): Promise<MediaTypes | null> {
+        return this.mediaTypesModel.findByPk(id);
+    }
 
-  async create(dto: MediaTypesDto): Promise<MediaTypes> {
-    return this.mediaTypesModel.create(dto as any);
-  }
+    async create(dto: MediaTypesDto): Promise<MediaTypes> {
+        return this.mediaTypesModel.create(dto as any);
+    }
 
-  async update(id: number, dto: MediaTypesDto): Promise<[number, MediaTypes[]]> {
-    return this.mediaTypesModel.update(dto, { where: { id }, returning: true });
-  }
+    async update(
+        id: number,
+        dto: MediaTypesDto
+    ): Promise<[number, MediaTypes[]]> {
+        return this.mediaTypesModel.update(dto, {
+            where: { id },
+            returning: true
+        });
+    }
 
-  async remove(id: number): Promise<number> {
-    return this.mediaTypesModel.destroy({ where: { id } });
-  }
+    async remove(id: number): Promise<number> {
+        return this.mediaTypesModel.destroy({ where: { id } });
+    }
 }

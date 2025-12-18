@@ -3,16 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('recipe_course_mappings', {
-            recipeId: {
+        await queryInterface.createTable('course_ratings', {
+            courseId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'courses',
+                    key: 'courseId'
+                },
+                allowNull: false,
+                primaryKey: true
+            },
+            userId: {
+                references: {
+                    model: 'users',
+                    key: 'userId'
+                },
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 primaryKey: true
             },
-            courseId: {
-                type: Sequelize.INTEGER,
+            rating: {
+                type: Sequelize.DECIMAL(2, 1),
                 allowNull: false,
-                primaryKey: true
+                comment: 'Rating value from 0.0 to 5.0'
             },
             createdAt: {
                 allowNull: false,
@@ -26,7 +39,6 @@ module.exports = {
     },
 
     async down(queryInterface) {
-        await queryInterface.dropTable('recipe_course_mappings');
+        await queryInterface.dropTable('course_ratings');
     }
 };
-

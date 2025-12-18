@@ -5,35 +5,41 @@ import { RecipeMediaDto } from './recipe-media.dto';
 
 @Injectable()
 export class RecipeMediaService {
-  constructor(
-    @InjectModel(RecipeMedia)
-    private recipeMediaModel: typeof RecipeMedia,
-  ) {}
+    constructor(
+        @InjectModel(RecipeMedia)
+        private recipeMediaModel: typeof RecipeMedia
+    ) {}
 
-  async findAll(): Promise<RecipeMedia[]> {
-    return this.recipeMediaModel.findAll();
-  }
+    async findAll(): Promise<RecipeMedia[]> {
+        return this.recipeMediaModel.findAll();
+    }
 
-  async findOne(id: number): Promise<RecipeMedia | null> {
-    return this.recipeMediaModel.findByPk(id);
-  }
+    async findOne(id: number): Promise<RecipeMedia | null> {
+        return this.recipeMediaModel.findByPk(id);
+    }
 
-  async create(dto: RecipeMediaDto): Promise<RecipeMedia> {
-    return this.recipeMediaModel.create(dto as any);
-  }
+    async create(dto: RecipeMediaDto): Promise<RecipeMedia> {
+        return this.recipeMediaModel.create(dto as any);
+    }
 
-  async update(id: number, dto: RecipeMediaDto): Promise<[number, RecipeMedia[]]> {
-    return this.recipeMediaModel.update(dto, { where: { id }, returning: true });
-  }
+    async update(
+        id: number,
+        dto: RecipeMediaDto
+    ): Promise<[number, RecipeMedia[]]> {
+        return this.recipeMediaModel.update(dto, {
+            where: { id },
+            returning: true
+        });
+    }
 
-  async remove(id: number): Promise<number> {
-    return this.recipeMediaModel.destroy({ where: { id } });
-  }
+    async remove(id: number): Promise<number> {
+        return this.recipeMediaModel.destroy({ where: { id } });
+    }
 
-  async findByRecipeId(recipeId: number): Promise<RecipeMedia[]> {
-    return this.recipeMediaModel.findAll({
-      where: { recipeId },
-      order: [['sortOrder', 'ASC']]
-    });
-  }
+    async findByRecipeId(recipeId: number): Promise<RecipeMedia[]> {
+        return this.recipeMediaModel.findAll({
+            where: { recipeId },
+            order: [['sortOrder', 'ASC']]
+        });
+    }
 }

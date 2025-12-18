@@ -3,18 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('ingredients', {
-            ingredientId: {
+        await queryInterface.createTable('comments', {
+            commentId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false
             },
-            unitId: {
+            userId: {
                 type: Sequelize.INTEGER,
-                allowNull: true
+                references: {
+                    model: 'users',
+                    key: 'userId'
+                },
+                allowNull: false
             },
-            name: {
+            comment: {
                 type: Sequelize.TEXT,
                 allowNull: false
             },
@@ -30,7 +34,7 @@ module.exports = {
     },
 
     async down(queryInterface) {
-        await queryInterface.dropTable('ingredients');
+        await queryInterface.dropTable('comments');
     }
 };
 

@@ -3,24 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('courses', {
-            courseId: {
+        await queryInterface.createTable('recipe_comment_user_mappings', {
+            recipeId: {
                 type: Sequelize.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
+                references: {
+                    model: 'recipes',
+                    key: 'recipeId'
+                },
                 allowNull: false
             },
-            videoUrl: {
-                type: Sequelize.TEXT,
-                allowNull: true
-            },
-            name: {
-                type: Sequelize.TEXT,
+            commentId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'comments',
+                    key: 'commentId'
+                },
                 allowNull: false
-            },
-            description: {
-                type: Sequelize.TEXT,
-                allowNull: true
             },
             createdAt: {
                 allowNull: false,
@@ -34,7 +32,6 @@ module.exports = {
     },
 
     async down(queryInterface) {
-        await queryInterface.dropTable('courses');
+        await queryInterface.dropTable('recipe_comment_user_mappings');
     }
 };
-

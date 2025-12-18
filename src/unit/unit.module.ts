@@ -5,8 +5,8 @@ import { UnitService } from './unit.service';
 import { UnitController } from './unit.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Unit])],
-  providers: [UnitService],
-  controllers: [UnitController],
+    imports: [SequelizeModule.forFeature([Unit])],
+    providers: [UnitService],
+    controllers: [UnitController]
 })
 export class UnitModule {}

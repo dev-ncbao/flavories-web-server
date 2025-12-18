@@ -5,8 +5,8 @@ import { MediaTypesService } from './media-types.service';
 import { MediaTypesController } from './media-types.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([MediaTypes])],
-  providers: [MediaTypesService],
-  controllers: [MediaTypesController],
+    imports: [SequelizeModule.forFeature([MediaTypes])],
+    providers: [MediaTypesService],
+    controllers: [MediaTypesController]
 })
 export class MediaTypesModule {}

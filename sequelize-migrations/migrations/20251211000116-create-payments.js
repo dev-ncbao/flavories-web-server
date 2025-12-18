@@ -4,13 +4,27 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('payments', {
+            paymentId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                primaryKey: true,
+                autoIncrement: true
+            },
             courseId: {
                 type: Sequelize.INTEGER,
+                references: {
+                    model: 'courses',
+                    key: 'courseId'
+                },
                 allowNull: false,
                 primaryKey: true
             },
             userId: {
                 type: Sequelize.INTEGER,
+                references: {
+                    model: 'users',
+                    key: 'userId'
+                },
                 allowNull: false,
                 primaryKey: true
             },
