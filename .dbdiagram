@@ -1,0 +1,179 @@
+Table sequelizemeta {
+  name varchar(255) [pk]
+}
+
+Table gender {
+  genderId int [pk]
+  name text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table roles {
+  roleId int [pk]
+  name text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table units {
+  unitId int [pk]
+  name text
+  abbreviation text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table users {
+  userId int [pk]
+  genderId int
+  roleId int
+  firstName text
+  lastName text
+  username varchar(255) [unique]
+  email varchar(255) [unique]
+  password text
+  avatarUrl text
+  bio text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table ingredients {
+  ingredientId int [pk]
+  unitId int
+  name text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipes {
+  recipeId int [pk]
+  userId int
+  name text
+  description text
+  thumbnailUrl text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table courses {
+  courseId int [pk]
+  videoUrl text
+  userId int
+  thumbnailUrl text
+  name text
+  description text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table comments {
+  commentId int [pk]
+  userId int
+  comment text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipe_comment_user_mappings {
+  recipeId int [pk]
+  commentId int [pk]
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table course_comment_user_mappings {
+  courseId int [pk]
+  commentId int [pk]
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table reaction_types {
+  reactionTypeId int [pk]
+  name text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipe_course_mappings {
+  recipeId int [pk]
+  courseId int [pk]
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table course_ingredient_mappings {
+  ingredientId int [pk]
+  courseId int [pk]
+  amount decimal
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipe_ingredient_mappings {
+  ingredientId int [pk]
+  recipeId int [pk]
+  amount decimal
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipe_reaction_mappings {
+  reactionTypeId int [pk]
+  recipeId int [pk]
+  userId int [pk]
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table course_ratings {
+  courseId int [pk]
+  userId int [pk]
+  rating decimal
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table payments {
+  paymentId int [pk]
+  courseId int
+  userId int
+  amount decimal
+  createdAt datetime
+  updatedAt datetime
+}
+
+Ref: users.genderId > gender.genderId
+Ref: users.roleId > roles.roleId
+
+Ref: ingredients.unitId > units.unitId
+Ref: recipes.userId > users.userId
+Ref: courses.userId > users.userId
+Ref: comments.userId > users.userId
+
+Ref: recipe_comment_user_mappings.recipeId > recipes.recipeId
+Ref: recipe_comment_user_mappings.commentId > comments.commentId
+
+Ref: course_comment_user_mappings.courseId > courses.courseId
+Ref: course_comment_user_mappings.commentId > comments.commentId
+
+Ref: recipe_course_mappings.recipeId > recipes.recipeId
+Ref: recipe_course_mappings.courseId > courses.courseId
+
+Ref: course_ingredient_mappings.ingredientId > ingredients.ingredientId
+Ref: course_ingredient_mappings.courseId > courses.courseId
+
+Ref: recipe_ingredient_mappings.ingredientId > ingredients.ingredientId
+Ref: recipe_ingredient_mappings.recipeId > recipes.recipeId
+
+Ref: recipe_reaction_mappings.reactionTypeId > reaction_types.reactionTypeId
+Ref: recipe_reaction_mappings.recipeId > recipes.recipeId
+Ref: recipe_reaction_mappings.userId > users.userId
+
+Ref: course_ratings.courseId > courses.courseId
+Ref: course_ratings.userId > users.userId
+
+Ref: payments.courseId > courses.courseId
+Ref: payments.userId > users.userId

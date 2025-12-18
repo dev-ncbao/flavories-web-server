@@ -5,6 +5,7 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('recipe_comment_user_mappings', {
             recipeId: {
+                primaryKey: true,
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'recipes',
@@ -13,6 +14,7 @@ module.exports = {
                 allowNull: false
             },
             commentId: {
+                primaryKey: true,
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'comments',

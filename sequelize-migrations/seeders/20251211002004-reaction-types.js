@@ -7,8 +7,8 @@ module.exports = {
         await queryInterface.bulkInsert(
             'reaction_types',
             [
-                { reactionTypeId: 1, name: 'like', createdAt: now, updatedAt: now },
-                { reactionTypeId: 2, name: 'dislike', createdAt: now, updatedAt: now }
+                { reactionTypeId: 1, name: 'Like', createdAt: now, updatedAt: now },
+                { reactionTypeId: 2, name: 'Dislike', createdAt: now, updatedAt: now }
             ],
             {}
         );

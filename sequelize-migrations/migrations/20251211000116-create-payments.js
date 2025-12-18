@@ -17,7 +17,6 @@ module.exports = {
                     key: 'courseId'
                 },
                 allowNull: false,
-                primaryKey: true
             },
             userId: {
                 type: Sequelize.INTEGER,
@@ -26,7 +25,6 @@ module.exports = {
                     key: 'userId'
                 },
                 allowNull: false,
-                primaryKey: true
             },
             amount: {
                 type: Sequelize.DECIMAL(10, 2),

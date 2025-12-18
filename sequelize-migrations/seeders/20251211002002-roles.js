@@ -7,9 +7,9 @@ module.exports = {
         await queryInterface.bulkInsert(
             'roles',
             [
-                { roleId: 1, name: 'admin', createdAt: now, updatedAt: now },
-                { roleId: 2, name: 'instructor', createdAt: now, updatedAt: now },
-                { roleId: 3, name: 'member', createdAt: now, updatedAt: now }
+                { roleId: 1, name: 'Admin', createdAt: now, updatedAt: now },
+                { roleId: 2, name: 'Instructor', createdAt: now, updatedAt: now },
+                { roleId: 3, name: 'Member', createdAt: now, updatedAt: now }
             ],
             {}
         );
