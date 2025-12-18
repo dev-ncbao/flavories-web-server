@@ -5,7 +5,7 @@ module.exports = {
     async up(queryInterface) {
         const now = new Date();
         await queryInterface.bulkInsert(
-            'recipe_reaction_mappings',
+            'recipe_reactions',
             [
                 { reactionTypeId: 1, recipeId: 1, userId: 4, createdAt: now, updatedAt: now },
                 { reactionTypeId: 2, recipeId: 2, userId: 5, createdAt: now, updatedAt: now },

@@ -5,7 +5,7 @@ module.exports = {
     async up(queryInterface) {
         const now = new Date();
         await queryInterface.bulkInsert(
-            'course_ingredient_mappings',
+            'course_ingredients',
             [
                 { ingredientId: 1, courseId: 1, amount: 300.0, createdAt: now, updatedAt: now },
                 { ingredientId: 3, courseId: 1, amount: 15.0, createdAt: now, updatedAt: now },

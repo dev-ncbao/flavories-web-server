@@ -14,6 +14,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
                     name: 'Vietnamese Street Food Essentials',
                     description: 'Hands-on lessons covering pho, banh mi, and classic street dishes.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 1,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -24,6 +27,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg',
                     name: 'Weeknight Comfort Dinners',
                     description: 'Quick, cozy dinners with minimal prep and big flavors.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 2,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -34,6 +40,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg',
                     name: 'Seafood Masterclass',
                     description: 'Techniques for perfectly seared, grilled, and sauced seafood.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 3,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -44,6 +53,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg',
                     name: 'Fast & Flavorful Pasta Night',
                     description: 'Master 3 weeknight pasta dishes under 30 minutes.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 14,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -54,6 +66,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg',
                     name: 'Artisan Sourdough at Home',
                     description: 'From starter to bake: reliable sourdough techniques.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: null,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -64,6 +79,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg',
                     name: 'Sushi Rolling Basics',
                     description: 'Maki, uramaki, and nigiri fundamentals with pantry-friendly tips.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 30,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -74,6 +92,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg',
                     name: 'Low & Slow BBQ Brisket',
                     description: 'Trim, rub, smoke, and slice a competition-style brisket.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: null,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -84,6 +105,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg',
                     name: 'Vegan Meal Prep Staples',
                     description: 'Batch-cook grains, legumes, and sauces for the week.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 44,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -94,6 +118,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg',
                     name: 'Thai Curry Fundamentals',
                     description: 'Red, green, and panang curry pastes from scratch.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 28,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -104,6 +131,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg',
                     name: 'Taco Night Essentials',
                     description: 'Handmade tortillas, salsas, and three classic fillings.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 34,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -114,6 +144,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/WeAreGoingOnBullrun.jpg',
                     name: 'Indian Curries 101',
                     description: 'Masala bases, tempering, and five weeknight-friendly curries.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 22,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -124,6 +157,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/WhatCarCanYouGetForAGrand.jpg',
                     name: 'Ramen at Home',
                     description: 'Broths, tare, chashu, and noodles without special equipment.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 20,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -134,6 +170,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg',
                     name: 'Power Salad & Grain Bowls',
                     description: 'Layer textures, dressings, and proteins for balanced bowls.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 31,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -144,6 +183,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg',
                     name: 'Cake Baking Foundations',
                     description: 'Sponge, butter, and chiffon cakes with dependable methods.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: null,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -154,6 +196,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg',
                     name: 'Chocolate Desserts',
                     description: 'Ganache, lava cakes, brownies, and tempering basics.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 48,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -164,6 +209,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg',
                     name: 'Kimchi & Fermentation Basics',
                     description: 'Salt ratios, brines, and safe fermentation at home.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: null,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -174,6 +222,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg',
                     name: 'Neapolitan Pizza at Home',
                     description: 'High-hydration dough, shaping, and baking in home ovens.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 9,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -184,6 +235,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg',
                     name: 'Dim Sum Classics',
                     description: 'Dumplings, buns, and steaming techniques step-by-step.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 47,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -194,6 +248,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg',
                     name: 'Spanish Tapas Night',
                     description: 'Patatas bravas, gambas al ajillo, tortilla, and more.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 42,
                     createdAt: now,
                     updatedAt: now
                 },
@@ -204,6 +261,9 @@ module.exports = {
                     thumbnailUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
                     name: 'Smoothie & Açaí Bowls',
                     description: 'Blend thick bases, crunchy toppings, and balanced flavors.',
+                    viewCount: 0,
+                    rating: 0,
+                    linkedRecipeId: 29,
                     createdAt: now,
                     updatedAt: now
                 }
