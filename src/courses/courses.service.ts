@@ -3,28 +3,28 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
-import { Recipe } from './recipes.model';
-import { CreateRecipeDto, UpdateRecipeDto } from './recipes.dto';
+import { Course } from './courses.model';
+import { CreateCourseDto, UpdateCourseDto } from './courses.dto';
 import { User } from 'src/users/user.model';
-import { RecipeIngredient } from 'src/recipe-ingredients/recipe-ingredients.model';
+import { CourseIngredient } from 'src/course-ingredients/course-ingredients.model';
 import { Ingredient } from 'src/ingredients/ingredients.model';
 import { Unit } from 'src/units/units.model';
-import { RecipeComment } from 'src/recipe-comments/recipe-comments.model';
-import { RecipeStep } from 'src/recipe-steps/recipe-steps.model';
+import { CourseComment } from 'src/course-comments/course-comments.model';
+import { CourseStep } from 'src/course-steps/course-steps.model';
 
 @Injectable()
-export class RecipesService {
+export class CoursesService {
     constructor(
-        @InjectModel(Recipe)
-        private readonly recipeModel: typeof Recipe
+        @InjectModel(Course)
+        private readonly courseModel: typeof Course
     ) {}
 
-    async create(dto: CreateRecipeDto): Promise<Recipe> {
-        return this.recipeModel.create({ ...dto });
+    async create(dto: CreateCourseDto): Promise<Course> {
+        return this.courseModel.create({ ...dto });
     }
 
-    async findAll(): Promise<Recipe[]> {
-        return this.recipeModel.findAll({
+    async findAll(): Promise<Course[]> {
+        return this.courseModel.findAll({
             include: [
                 {
                     model: User,
@@ -40,8 +40,8 @@ export class RecipesService {
         });
     }
 
-    async findOne(recipeId: number): Promise<Recipe> {
-        const recipe = await this.recipeModel.findByPk(recipeId, {
+    async findOne(courseId: number): Promise<Course> {
+        const course = await this.courseModel.findByPk(courseId, {
             include: [
                 {
                     model: User,
@@ -53,7 +53,7 @@ export class RecipesService {
                     ]
                 },
                 {
-                    model: RecipeIngredient,
+                    model: CourseIngredient,
                     attributes: ['amount'],
                     include: [
                         {
@@ -66,8 +66,8 @@ export class RecipesService {
                     ]
                 },
                 {
-                    model: RecipeComment,
-                    attributes: ['recipeCommentId', 'comment', 'createdAt'],
+                    model: CourseComment,
+                    attributes: ['courseCommentId', 'comment', 'createdAt'],
                     include: [
                         {
                             model: User,
@@ -81,39 +81,39 @@ export class RecipesService {
                     ]
                 },
                 {
-                    model: RecipeStep,
+                    model: CourseStep,
                     attributes: ['stepNumber', 'description']
                 }
             ]
         });
-        if (!recipe) {
-            throw new NotFoundException('Recipe not found');
+        if (!course) {
+            throw new NotFoundException('Course not found');
         }
-        return recipe;
+        return course;
     }
 
-    async update(recipeId: number, dto: UpdateRecipeDto): Promise<Recipe> {
-        const recipe = await this.findOne(recipeId);
-        await recipe.update({ ...dto });
-        return recipe;
+    async update(courseId: number, dto: UpdateCourseDto): Promise<Course> {
+        const course = await this.findOne(courseId);
+        await course.update({ ...dto });
+        return course;
     }
 
-    async remove(recipeId: number): Promise<void> {
-        const recipe = await this.findOne(recipeId);
-        await recipe.destroy();
+    async remove(courseId: number): Promise<void> {
+        const course = await this.findOne(courseId);
+        await course.destroy();
     }
 
-    async getTopThisMonth(limit = 20): Promise<Recipe[]> {
+    async getTopThisMonth(limit = 20): Promise<Course[]> {
         const now = new Date();
         const startOfMonth = new Date(
             Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0)
         );
-        return this.recipeModel.findAll({
+        return this.courseModel.findAll({
             where: {
                 createdAt: { [Op.gte]: startOfMonth }
             },
             order: [
-                ['likeCount', 'DESC'],
+                ['rating', 'DESC'],
                 ['createdAt', 'DESC']
             ],
             limit,
@@ -132,12 +132,12 @@ export class RecipesService {
         });
     }
 
-    async getNewestThisMonth(limit = 20): Promise<Recipe[]> {
+    async getNewestThisMonth(limit = 20): Promise<Course[]> {
         const now = new Date();
         const startOfMonth = new Date(
             Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0)
         );
-        return this.recipeModel.findAll({
+        return this.courseModel.findAll({
             where: {
                 createdAt: { [Op.gte]: startOfMonth }
             },
@@ -158,10 +158,10 @@ export class RecipesService {
         });
     }
 
-    async getTopAllTime(limit = 20): Promise<Recipe[]> {
-        return this.recipeModel.findAll({
+    async getTopAllTime(limit = 20): Promise<Course[]> {
+        return this.courseModel.findAll({
             order: [
-                ['likeCount', 'DESC'],
+                ['rating', 'DESC'],
                 ['createdAt', 'DESC']
             ],
             limit,
@@ -180,3 +180,4 @@ export class RecipesService {
         });
     }
 }
+

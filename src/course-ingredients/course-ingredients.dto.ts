@@ -2,18 +2,18 @@
 
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-export class CreateRecipeIngredientDto {
+export class CreateCourseIngredientDto {
     @ApiProperty()
     ingredientId: number;
 
     @ApiProperty()
-    recipeId: number;
+    courseId: number;
 
     @ApiProperty({ required: false, description: 'Amount of ingredient (e.g., grams)' })
     amount?: number;
 }
 
-export class UpdateRecipeIngredientDto extends PartialType(
+export class UpdateCourseIngredientDto extends PartialType(
     class {
         // @ApiProperty({ required: false })
         amount?: number;

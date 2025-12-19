@@ -18,6 +18,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 1,
                     createdAt: now,
                     updatedAt: now
@@ -33,6 +34,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 2,
                     createdAt: now,
                     updatedAt: now
@@ -48,6 +50,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 3,
                     createdAt: now,
                     updatedAt: now
@@ -63,6 +66,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 4,
                     createdAt: now,
                     updatedAt: now
@@ -78,6 +82,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 5,
                     createdAt: now,
                     updatedAt: now
@@ -93,6 +98,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -108,6 +114,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -123,6 +130,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -138,6 +146,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 17,
                     createdAt: now,
                     updatedAt: now
@@ -153,6 +162,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 11,
                     createdAt: now,
                     updatedAt: now
@@ -168,6 +178,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 11,
                     createdAt: now,
                     updatedAt: now
@@ -183,6 +194,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 12,
                     createdAt: now,
                     updatedAt: now
@@ -198,6 +210,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 7,
                     createdAt: now,
                     updatedAt: now
@@ -213,6 +226,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 4,
                     createdAt: now,
                     updatedAt: now
@@ -228,6 +242,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -243,6 +258,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 13,
                     createdAt: now,
                     updatedAt: now
@@ -258,6 +274,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -273,6 +290,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -288,6 +306,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 13,
                     createdAt: now,
                     updatedAt: now
@@ -303,6 +322,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 12,
                     createdAt: now,
                     updatedAt: now
@@ -318,6 +338,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 10,
                     createdAt: now,
                     updatedAt: now
@@ -333,6 +354,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 11,
                     createdAt: now,
                     updatedAt: now
@@ -348,6 +370,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -363,6 +386,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 4,
                     createdAt: now,
                     updatedAt: now
@@ -378,6 +402,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -393,6 +418,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -408,6 +434,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -423,6 +450,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 9,
                     createdAt: now,
                     updatedAt: now
@@ -438,6 +466,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 20,
                     createdAt: now,
                     updatedAt: now
@@ -453,6 +482,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 6,
                     createdAt: now,
                     updatedAt: now
@@ -467,6 +497,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 13,
                     createdAt: now,
                     updatedAt: now
@@ -482,6 +513,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 6,
                     createdAt: now,
                     updatedAt: now
@@ -497,6 +529,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 4,
                     createdAt: now,
                     updatedAt: now
@@ -512,6 +545,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 10,
                     createdAt: now,
                     updatedAt: now
@@ -527,6 +561,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 8,
                     createdAt: now,
                     updatedAt: now
@@ -542,6 +577,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -557,6 +593,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -572,6 +609,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -587,6 +625,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -602,6 +641,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -617,6 +657,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -632,6 +673,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 19,
                     createdAt: now,
                     updatedAt: now
@@ -647,6 +689,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -661,6 +704,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 8,
                     createdAt: now,
                     updatedAt: now
@@ -676,6 +720,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -690,6 +735,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: null,
                     createdAt: now,
                     updatedAt: now
@@ -705,6 +751,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 18,
                     createdAt: now,
                     updatedAt: now
@@ -719,6 +766,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 15,
                     createdAt: now,
                     updatedAt: now
@@ -733,6 +781,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 20,
                     createdAt: now,
                     updatedAt: now
@@ -748,6 +797,7 @@ module.exports = {
                     viewCount: 0,
                     likeCount: 0,
                     dislikeCount: 0,
+                    commentCount: 0,
                     linkedCourseId: 15,
                     createdAt: now,
                     updatedAt: now

@@ -10,13 +10,13 @@ import {
 } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 import { Ingredient } from 'src/ingredients/ingredients.model';
-import { Recipe } from 'src/recipes/recipes.model';
+import { Course } from 'src/courses/courses.model';
 
 @Table({
-    tableName: 'recipe_ingredients',
+    tableName: 'course_ingredients',
     timestamps: true
 })
-export class RecipeIngredient extends Model {
+export class CourseIngredient extends Model {
     @PrimaryKey
     @ForeignKey(() => Ingredient)
     @Column({
@@ -29,15 +29,15 @@ export class RecipeIngredient extends Model {
     ingredient: Ingredient;
 
     @PrimaryKey
-    @ForeignKey(() => Recipe)
+    @ForeignKey(() => Course)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
-    recipeId: number;
+    courseId: number;
 
-    @BelongsTo(() => Recipe)
-    recipe: Recipe;
+    @BelongsTo(() => Course)
+    course: Course;
 
     @Column({
         type: DataType.DECIMAL(10, 2),
@@ -45,3 +45,4 @@ export class RecipeIngredient extends Model {
     })
     amount: number | null;
 }
+

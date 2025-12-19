@@ -5,9 +5,13 @@ import {
     Column,
     DataType,
     ForeignKey,
+    HasMany,
     Model,
     Table
 } from 'sequelize-typescript';
+import { RecipeComment } from 'src/recipe-comments/recipe-comments.model';
+import { RecipeIngredient } from 'src/recipe-ingredients/recipe-ingredients.model';
+import { RecipeStep } from 'src/recipe-steps/recipe-steps.model';
 import { User } from 'src/users/user.model';
 
 @Table({
@@ -66,6 +70,13 @@ export class Recipe extends Model {
     dislikeCount: number;
 
     @Column({
+        type: DataType.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+    })
+    commentCount: number;
+
+    @Column({
         type: DataType.TEXT,
         allowNull: true
     })
@@ -76,4 +87,13 @@ export class Recipe extends Model {
         allowNull: true
     })
     linkedCourseId: number | null;
+
+    @HasMany(() => RecipeIngredient)
+    recipeIngredients: RecipeIngredient[];
+
+    @HasMany(() => RecipeComment)
+    recipeComments: RecipeComment[];
+
+    @HasMany(() => RecipeStep)
+    recipeSteps: RecipeStep[];
 }

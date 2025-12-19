@@ -7,6 +7,14 @@ import { UserModule } from './users/user.module';
 import { ViewModule } from './view/view.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { RecipeIngredientsModule } from './recipe-ingredients/recipe-ingredients.module';
+import { UnitsModule } from './units/units.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
+import { RecipeCommentsModule } from './recipe-comments/recipe-comments.module';
+import { RecipeStepsModule } from './recipe-steps/recipe-steps.module';
+import { CoursesModule } from './courses/courses.module';
+import { CourseCommentsModule } from './course-comments/course-comments.module';
+import { CourseIngredientsModule } from './course-ingredients/course-ingredients.module';
+import { CourseStepsModule } from './course-steps/course-steps.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -31,7 +39,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         UserModule,
         ViewModule,
         RecipesModule,
-        RecipeIngredientsModule
+        RecipeIngredientsModule,
+        UnitsModule,
+        IngredientsModule,
+        RecipeCommentsModule,
+        RecipeStepsModule,
+        CoursesModule,
+        CourseCommentsModule,
+        CourseIngredientsModule,
+        CourseStepsModule
     ],
     controllers: [AppController],
     providers: [AppService]

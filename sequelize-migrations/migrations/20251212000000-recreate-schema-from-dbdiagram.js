@@ -112,6 +112,11 @@ module.exports = {
                 allowNull: true,
                 defaultValue: 0
             },
+            commentCount: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue: 0
+            },
             thumbnailUrl: { type: Sequelize.TEXT, allowNull: true },
             linkedCourseId: { type: Sequelize.INTEGER, allowNull: true },
             createdAt: { allowNull: false, type: Sequelize.DATE },
@@ -150,8 +155,18 @@ module.exports = {
                 allowNull: true,
                 defaultValue: 0
             },
+            commentCount: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue: 0
+            },
             rating: {
-                type: Sequelize.DECIMAL(5, 2),
+                type: Sequelize.DECIMAL(1, 1),
+                allowNull: true,
+                defaultValue: 0
+            },
+            price: {
+                type: Sequelize.DECIMAL(10, 0),
                 allowNull: true,
                 defaultValue: 0
             },
