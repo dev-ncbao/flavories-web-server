@@ -22,7 +22,7 @@ module.exports = {
     },
 
     async down(queryInterface) {
-        await queryInterface.bulkDelete('course_ingredient_mappings', null, {});
+        await queryInterface.bulkDelete('course_ingredients', null, {});
     }
 };
 

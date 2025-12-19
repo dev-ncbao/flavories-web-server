@@ -4,26 +4,43 @@
 module.exports = {
     async up(queryInterface) {
         const now = new Date();
-        await queryInterface.bulkInsert(
-            'recipe_comments',
-            [
-                { recipeCommentId: 1, userId: 4, comment: 'Tried this lemongrass chicken—juicy and flavorful!', createdAt: now, updatedAt: now },
-                { recipeCommentId: 2, userId: 5, comment: 'Coconut curry broth was perfect with extra chili.', createdAt: now, updatedAt: now },
-                { recipeCommentId: 3, userId: 4, comment: 'Crispy beef banh mi reminded me of Saigon street stalls.', createdAt: now, updatedAt: now },
-                { recipeCommentId: 4, userId: 5, comment: 'Garlic butter shrimp was a hit at dinner—thanks!', createdAt: now, updatedAt: now },
-                { recipeCommentId: 5, userId: 4, comment: 'Risotto came out creamy; added extra mushrooms.', createdAt: now, updatedAt: now }
-            ],
-            {}
-        );
+        // 10 comments per recipe (recipes 1..50)
+        const recipeComments = [];
+        let recipeCommentId = 1;
+        const recipeUserPool = Array.from({ length: 30 }, (_, i) => i + 1);
+        for (let recipeId = 1; recipeId <= 50; recipeId += 1) {
+            for (let i = 0; i < 10; i += 1) {
+                const userId = recipeUserPool[(recipeId + i) % recipeUserPool.length];
+                recipeComments.push({
+                    recipeCommentId: recipeCommentId++,
+                    recipeId,
+                    userId,
+                    comment: `Comment ${i + 1} on recipe ${recipeId}`,
+                    createdAt: now,
+                    updatedAt: now
+                });
+            }
+        }
+        await queryInterface.bulkInsert('recipe_comments', recipeComments, {});
 
-        await queryInterface.bulkInsert(
-            'course_comments',
-            [
-                { courseCommentId: 6, userId: 6, comment: 'Loved the pacing of the comfort dinners course!', createdAt: now, updatedAt: now },
-                { courseCommentId: 7, userId: 7, comment: 'Seafood masterclass helped me perfect searing salmon.', createdAt: now, updatedAt: now }
-            ],
-            {}
-        );
+        // 3 comments per course (courses 1..20)
+        const courseComments = [];
+        let courseCommentId = 1;
+        const courseUserPool = Array.from({ length: 30 }, (_, i) => i + 1);
+        for (let courseId = 1; courseId <= 20; courseId += 1) {
+            for (let i = 0; i < 3; i += 1) {
+                const userId = courseUserPool[(courseId + i) % courseUserPool.length];
+                courseComments.push({
+                    courseCommentId: courseCommentId++,
+                    courseId,
+                    userId,
+                    comment: `Comment ${i + 1} on course ${courseId}`,
+                    createdAt: now,
+                    updatedAt: now
+                });
+            }
+        }
+        await queryInterface.bulkInsert('course_comments', courseComments, {});
     },
 
     async down(queryInterface) {

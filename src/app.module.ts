@@ -2,13 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppService } from './app.service';
-import { RecipeMediaModule } from './recipe-media/recipe-media.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './users/user.module';
-import { RecipeModule } from './recipe/recipe.module';
 import { ViewModule } from './view/view.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { RecipeIngredientsModule } from './recipe-ingredients/recipe-ingredients.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RecipeIngredientModule } from './recipe-ingredient/recipe-ingredient.module';
 
 @Module({
     imports: [
@@ -28,12 +27,11 @@ import { RecipeIngredientModule } from './recipe-ingredient/recipe-ingredient.mo
                 synchronize: false // Keep false in production, use migrations instead
             })
         }),
-        RecipeMediaModule,
         AuthModule,
         UserModule,
-        RecipeModule,
         ViewModule,
-        RecipeIngredientModule,
+        RecipesModule,
+        RecipeIngredientsModule
     ],
     controllers: [AppController],
     providers: [AppService]

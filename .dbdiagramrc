@@ -1,7 +1,3 @@
-Table sequelizemeta {
-  name varchar(255) [pk]
-}
-
 Table gender {
   genderId int [pk]
   name text
@@ -52,7 +48,19 @@ Table recipes {
   userId int
   name text
   description text
+  viewCount int
+  likeCount int
+  dislikeCount int
   thumbnailUrl text
+  linkedCourseId int
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table recipe_comments {
+  recipeCommentId int [pk]
+  userId int
+  comment text
   createdAt datetime
   updatedAt datetime
 }
@@ -63,29 +71,18 @@ Table courses {
   userId int
   thumbnailUrl text
   name text
+  viewCount int
+  rating decimal
+  linkedRecipeId int
   description text
   createdAt datetime
   updatedAt datetime
 }
 
-Table comments {
-  commentId int [pk]
+Table course_comments {
+  courseCommentId int [pk]
   userId int
   comment text
-  createdAt datetime
-  updatedAt datetime
-}
-
-Table recipe_comment_user_mappings {
-  recipeId int [pk]
-  commentId int [pk]
-  createdAt datetime
-  updatedAt datetime
-}
-
-Table course_comment_user_mappings {
-  courseId int [pk]
-  commentId int [pk]
   createdAt datetime
   updatedAt datetime
 }
@@ -97,14 +94,7 @@ Table reaction_types {
   updatedAt datetime
 }
 
-Table recipe_course_mappings {
-  recipeId int [pk]
-  courseId int [pk]
-  createdAt datetime
-  updatedAt datetime
-}
-
-Table course_ingredient_mappings {
+Table course_ingredients {
   ingredientId int [pk]
   courseId int [pk]
   amount decimal
@@ -112,7 +102,7 @@ Table course_ingredient_mappings {
   updatedAt datetime
 }
 
-Table recipe_ingredient_mappings {
+Table recipe_ingredients {
   ingredientId int [pk]
   recipeId int [pk]
   amount decimal
@@ -120,7 +110,7 @@ Table recipe_ingredient_mappings {
   updatedAt datetime
 }
 
-Table recipe_reaction_mappings {
+Table recipe_reactions {
   reactionTypeId int [pk]
   recipeId int [pk]
   userId int [pk]
@@ -145,35 +135,49 @@ Table payments {
   updatedAt datetime
 }
 
+Table recipe_steps {
+  recipeStepId int [pk]
+  recipeId int
+  stepNumber int
+  description text
+  createdAt datetime
+  updatedAt datetime
+}
+
+Table course_steps {
+  courseStepId int [pk]
+  courseId int
+  stepNumber int
+  description text
+  createdAt datetime
+  updatedAt datetime
+}
+
 Ref: users.genderId > gender.genderId
 Ref: users.roleId > roles.roleId
 
 Ref: ingredients.unitId > units.unitId
 Ref: recipes.userId > users.userId
 Ref: courses.userId > users.userId
-Ref: comments.userId > users.userId
 
-Ref: recipe_comment_user_mappings.recipeId > recipes.recipeId
-Ref: recipe_comment_user_mappings.commentId > comments.commentId
+Ref: recipe_comments.userId > users.userId
+Ref: course_comments.userId > users.userId
 
-Ref: course_comment_user_mappings.courseId > courses.courseId
-Ref: course_comment_user_mappings.commentId > comments.commentId
+Ref: course_ingredients.ingredientId > ingredients.ingredientId
+Ref: course_ingredients.courseId > courses.courseId
 
-Ref: recipe_course_mappings.recipeId > recipes.recipeId
-Ref: recipe_course_mappings.courseId > courses.courseId
+Ref: recipe_ingredients.ingredientId > ingredients.ingredientId
+Ref: recipe_ingredients.recipeId > recipes.recipeId
 
-Ref: course_ingredient_mappings.ingredientId > ingredients.ingredientId
-Ref: course_ingredient_mappings.courseId > courses.courseId
-
-Ref: recipe_ingredient_mappings.ingredientId > ingredients.ingredientId
-Ref: recipe_ingredient_mappings.recipeId > recipes.recipeId
-
-Ref: recipe_reaction_mappings.reactionTypeId > reaction_types.reactionTypeId
-Ref: recipe_reaction_mappings.recipeId > recipes.recipeId
-Ref: recipe_reaction_mappings.userId > users.userId
+Ref: recipe_reactions.reactionTypeId > reaction_types.reactionTypeId
+Ref: recipe_reactions.recipeId > recipes.recipeId
+Ref: recipe_reactions.userId > users.userId
 
 Ref: course_ratings.courseId > courses.courseId
 Ref: course_ratings.userId > users.userId
 
 Ref: payments.courseId > courses.courseId
 Ref: payments.userId > users.userId
+
+Ref: recipe_steps.recipeId > recipes.recipeId
+Ref: course_steps.courseId > courses.courseId
