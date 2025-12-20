@@ -22,7 +22,8 @@ import {
     CreateCoursePaymentDto,
     CoursePaymentResponseDto,
     CheckPaymentStatusDto,
-    PaymentStatusResponseDto
+    PaymentStatusResponseDto,
+    CoursePurchaseStatusResponseDto
 } from './payment.dto';
 import {
     ApiTags,
@@ -130,6 +131,30 @@ export class PaymentController {
         return await this.paymentService.checkPaymentStatus(
             courseId,
             orderCode
+        );
+    }
+
+    @Get('course/:courseId/purchase-status')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('accessToken')
+    @ApiOperation({
+        summary: 'Kiểm tra người dùng đã mua khóa học chưa',
+        description:
+            'Kiểm tra xem người dùng đã mua khóa học này chưa. UserId được lấy từ JWT token.'
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Kiểm tra trạng thái mua khóa học thành công',
+        type: CoursePurchaseStatusResponseDto
+    })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
+    async checkCoursePurchase(
+        @Param('courseId', ParseIntPipe) courseId: number,
+        @Request() req: AuthenticatedRequest
+    ): Promise<CoursePurchaseStatusResponseDto> {
+        return await this.paymentService.checkCoursePurchase(
+            courseId,
+            req.user.userId
         );
     }
 

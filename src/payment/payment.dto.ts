@@ -192,6 +192,26 @@ export class PaymentStatusResponseDto {
     };
 }
 
+export class CoursePurchaseStatusResponseDto {
+    @ApiProperty({ description: 'Người dùng đã mua khóa học này hay chưa' })
+    hasPurchased: boolean;
+
+    @ApiProperty({
+        required: false,
+        description: 'Thông tin thanh toán (nếu đã mua)'
+    })
+    payment?: {
+        paymentId: number;
+        courseId: number;
+        userId: number;
+        amount: number;
+        orderCode: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    };
+}
+
 export class WebhookDataDto {
     @ApiProperty()
     code: string;

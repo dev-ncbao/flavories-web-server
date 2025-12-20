@@ -16,7 +16,8 @@ import {
     CreateCoursePaymentDto,
     CoursePaymentResponseDto,
     CheckPaymentStatusDto,
-    PaymentStatusResponseDto
+    PaymentStatusResponseDto,
+    CoursePurchaseStatusResponseDto
 } from './payment.dto';
 import { Course } from '../courses/courses.model';
 import { Payment } from './payment.model';
@@ -366,6 +367,44 @@ export class PaymentService {
                 amount: payment.dataValues.amount,
                 orderCode: payment.dataValues.orderCode,
                 status: payOSStatus,
+                createdAt: payment.dataValues.createdAt,
+                updatedAt: payment.dataValues.updatedAt
+            }
+        };
+    }
+
+    /**
+     * Check if user has purchased a course
+     */
+    async checkCoursePurchase(
+        courseId: number,
+        userId: number
+    ): Promise<CoursePurchaseStatusResponseDto> {
+        // Find payment record with PAID status for this course and user
+        const payment = await this.paymentModel.findOne({
+            where: {
+                courseId: courseId,
+                userId: userId,
+                status: PaymentStatus.PAID
+            },
+            order: [['createdAt', 'DESC']] // Get the most recent purchase
+        });
+
+        if (!payment) {
+            return {
+                hasPurchased: false
+            };
+        }
+
+        return {
+            hasPurchased: true,
+            payment: {
+                paymentId: payment.dataValues.paymentId,
+                courseId: payment.dataValues.courseId,
+                userId: payment.dataValues.userId,
+                amount: payment.dataValues.amount,
+                orderCode: payment.dataValues.orderCode,
+                status: payment.dataValues.status,
                 createdAt: payment.dataValues.createdAt,
                 updatedAt: payment.dataValues.updatedAt
             }

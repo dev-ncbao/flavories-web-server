@@ -1,0 +1,204 @@
+// Flavories Database Schema
+// Generated from Sequelize migration file
+
+Table gender {
+  genderId int [pk, increment]
+  name text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table roles {
+  roleId int [pk, increment]
+  name text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table units {
+  unitId int [pk, increment]
+  name text [not null]
+  abbreviation text
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table users {
+  userId int [pk, increment]
+  genderId int
+  roleId int
+  firstName text
+  lastName text
+  username varchar(255) [not null, unique]
+  email varchar(255) [not null, unique]
+  password text [not null]
+  avatarUrl text
+  bio text
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table ingredients {
+  ingredientId int [pk, increment]
+  unitId int
+  name text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table recipes {
+  recipeId int [pk, increment]
+  userId int [not null]
+  name text [not null]
+  description text
+  viewCount int [default: 0]
+  likeCount int [default: 0]
+  dislikeCount int [default: 0]
+  commentCount int [default: 0]
+  thumbnailUrl text
+  linkedCourseId int
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table recipe_comments {
+  recipeCommentId int [pk, increment]
+  recipeId int [not null]
+  userId int [not null]
+  comment text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table courses {
+  courseId int [pk, increment]
+  videoUrl text
+  userId int [not null]
+  thumbnailUrl text
+  name text [not null]
+  viewCount int [default: 0]
+  commentCount int [default: 0]
+  rating decimal(1,1) [default: 0]
+  price decimal(10,0) [default: 0]
+  linkedRecipeId int
+  description text
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table course_comments {
+  courseCommentId int [pk, increment]
+  courseId int [not null]
+  userId int [not null]
+  comment text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table reaction_types {
+  reactionTypeId int [pk, increment]
+  name text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table course_ingredients {
+  ingredientId int [pk]
+  courseId int [pk]
+  amount decimal(10,2)
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table recipe_ingredients {
+  ingredientId int [pk]
+  recipeId int [pk]
+  amount decimal(10,2)
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table recipe_reactions {
+  reactionTypeId int [pk]
+  recipeId int [pk]
+  userId int [pk]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table course_ratings {
+  courseId int [pk]
+  userId int [pk]
+  rating decimal(5,2) [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table payments {
+  paymentId int [pk, increment]
+  courseId int [not null]
+  userId int [not null]
+  amount decimal(10,2) [not null, default: 0]
+  orderCode int [not null]
+  paymentLinkId text [not null]
+  expiredAt datetime [not null]
+  status text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table recipe_steps {
+  recipeStepId int [pk, increment]
+  recipeId int [not null]
+  stepNumber int [not null]
+  description text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+Table course_steps {
+  courseStepId int [pk, increment]
+  courseId int [not null]
+  stepNumber int [not null]
+  description text [not null]
+  createdAt datetime [not null]
+  updatedAt datetime [not null]
+}
+
+// Foreign Key Relationships
+
+Ref: users.genderId > gender.genderId [delete: set null, update: cascade]
+Ref: users.roleId > roles.roleId [delete: set null, update: cascade]
+
+Ref: ingredients.unitId > units.unitId [delete: set null, update: cascade]
+
+Ref: recipes.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: course_comments.courseId > courses.courseId [delete: cascade, update: cascade]
+Ref: course_comments.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: recipe_comments.recipeId > recipes.recipeId [delete: cascade, update: cascade]
+Ref: recipe_comments.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: courses.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: course_ingredients.ingredientId > ingredients.ingredientId [delete: cascade, update: cascade]
+Ref: course_ingredients.courseId > courses.courseId [delete: cascade, update: cascade]
+
+Ref: recipe_ingredients.ingredientId > ingredients.ingredientId [delete: cascade, update: cascade]
+Ref: recipe_ingredients.recipeId > recipes.recipeId [delete: cascade, update: cascade]
+
+Ref: recipe_reactions.reactionTypeId > reaction_types.reactionTypeId [delete: cascade, update: cascade]
+Ref: recipe_reactions.recipeId > recipes.recipeId [delete: cascade, update: cascade]
+Ref: recipe_reactions.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: course_ratings.courseId > courses.courseId [delete: cascade, update: cascade]
+Ref: course_ratings.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: payments.courseId > courses.courseId [delete: cascade, update: cascade]
+Ref: payments.userId > users.userId [delete: cascade, update: cascade]
+
+Ref: recipe_steps.recipeId > recipes.recipeId [delete: cascade, update: cascade]
+
+Ref: course_steps.courseId > courses.courseId [delete: cascade, update: cascade]
+
