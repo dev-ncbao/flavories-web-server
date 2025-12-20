@@ -291,6 +291,10 @@ module.exports = {
                 allowNull: false,
                 defaultValue: 0
             },
+            orderCode: { type: Sequelize.INTEGER, allowNull: false },
+            paymentLinkId: { type: Sequelize.TEXT, allowNull: false },
+            expiredAt: { type: Sequelize.DATE, allowNull: false },
+            status: { type: Sequelize.TEXT, allowNull: false },
             createdAt: { allowNull: false, type: Sequelize.DATE },
             updatedAt: { allowNull: false, type: Sequelize.DATE }
         });

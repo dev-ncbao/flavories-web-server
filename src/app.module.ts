@@ -15,6 +15,8 @@ import { CoursesModule } from './courses/courses.module';
 import { CourseCommentsModule } from './course-comments/course-comments.module';
 import { CourseIngredientsModule } from './course-ingredients/course-ingredients.module';
 import { CourseStepsModule } from './course-steps/course-steps.module';
+import { PaymentModule } from './payment/payment.module';
+import { AdminModule } from './admin/admin.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -47,7 +49,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         CoursesModule,
         CourseCommentsModule,
         CourseIngredientsModule,
-        CourseStepsModule
+        CourseStepsModule,
+        PaymentModule,
+        AdminModule
     ],
     controllers: [AppController],
     providers: [AppService]
