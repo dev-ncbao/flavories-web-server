@@ -9,10 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 import { AdminSignInRequest } from './admin.dto';
 import { isValidEmail } from 'src/common/utils/email.utils';
 import { User } from 'src/users/user.model';
+import { APP_CONSTANTS } from 'src/common/constants/app.constants';
 
 @Injectable()
 export class AdminService {
-    private readonly ADMIN_ROLE_ID = 1; // Admin role ID from roles seeder
 
     constructor(
         private usersService: UserService,
@@ -45,7 +45,7 @@ export class AdminService {
         }
 
         // Check if user is admin (roleId = 1)
-        if (user.dataValues.roleId !== this.ADMIN_ROLE_ID) {
+        if (user.dataValues.roleId !== Number(APP_CONSTANTS.ADMIN_ROLE_ID)) {
             throw new UnauthorizedException(
                 'Access denied. Admin privileges required.'
             );

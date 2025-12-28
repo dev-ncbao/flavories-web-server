@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { View } from './view.model';
 import { CreateViewDto } from './view.dto';
+import { APP_CONSTANTS } from 'src/common/constants/app.constants';
 
 interface GetViewsOptions {
     limit?: number;
@@ -15,7 +16,12 @@ export class ViewService {
     constructor(@InjectModel(View) private viewModel: typeof View) {}
 
     async getViews(options: GetViewsOptions = {}): Promise<View[]> {
-        const { limit = 10, page = 1, recipeId, userId } = options;
+        const { 
+            limit = APP_CONSTANTS.DEFAULT_PAGINATION_LIMIT, 
+            page = APP_CONSTANTS.DEFAULT_PAGINATION_PAGE, 
+            recipeId, 
+            userId 
+        } = options;
 
         const offset = (page - 1) * limit;
 
@@ -53,7 +59,7 @@ export class ViewService {
     async deleteView(id: number): Promise<void> {
         const view = await this.viewModel.findByPk(id);
         if (!view) {
-            throw new Error('View not found');
+            throw new NotFoundException('View not found');
         }
         await view.destroy();
     }

@@ -11,6 +11,8 @@ import { Ingredient } from 'src/ingredients/ingredients.model';
 import { Unit } from 'src/units/units.model';
 import { CourseComment } from 'src/course-comments/course-comments.model';
 import { CourseStep } from 'src/course-steps/course-steps.model';
+import { USER_ATTRIBUTES, getStartOfCurrentMonth } from 'src/common/utils/sequelize.utils';
+import { APP_CONSTANTS } from 'src/common/constants/app.constants';
 
 @Injectable()
 export class CoursesService {
@@ -28,13 +30,7 @@ export class CoursesService {
             include: [
                 {
                     model: User,
-                    attributes: [
-                        'userId',
-                        'username',
-                        'avatarUrl',
-                        'firstName',
-                        'lastName'
-                    ]
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });
@@ -45,12 +41,7 @@ export class CoursesService {
             include: [
                 {
                     model: User,
-                    attributes: [
-                        'username',
-                        'avatarUrl',
-                        'firstName',
-                        'lastName'
-                    ]
+                    attributes: USER_ATTRIBUTES.filter(attr => attr !== 'userId')
                 },
                 {
                     model: CourseIngredient,
@@ -103,11 +94,8 @@ export class CoursesService {
         await course.destroy();
     }
 
-    async getTopThisMonth(limit = 20): Promise<Course[]> {
-        const now = new Date();
-        const startOfMonth = new Date(
-            Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0)
-        );
+    async getTopThisMonth(limit: number = APP_CONSTANTS.DEFAULT_TOP_LIMIT): Promise<Course[]> {
+        const startOfMonth = getStartOfCurrentMonth();
         return this.courseModel.findAll({
             where: {
                 createdAt: { [Op.gte]: startOfMonth }
@@ -120,23 +108,14 @@ export class CoursesService {
             include: [
                 {
                     model: User,
-                    attributes: [
-                        'userId',
-                        'username',
-                        'avatarUrl',
-                        'firstName',
-                        'lastName'
-                    ]
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });
     }
 
-    async getNewestThisMonth(limit = 20): Promise<Course[]> {
-        const now = new Date();
-        const startOfMonth = new Date(
-            Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0)
-        );
+    async getNewestThisMonth(limit: number = APP_CONSTANTS.DEFAULT_TOP_LIMIT): Promise<Course[]> {
+        const startOfMonth = getStartOfCurrentMonth();
         return this.courseModel.findAll({
             where: {
                 createdAt: { [Op.gte]: startOfMonth }
@@ -146,19 +125,13 @@ export class CoursesService {
             include: [
                 {
                     model: User,
-                    attributes: [
-                        'userId',
-                        'username',
-                        'avatarUrl',
-                        'firstName',
-                        'lastName'
-                    ]
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });
     }
 
-    async getTopAllTime(limit = 20): Promise<Course[]> {
+    async getTopAllTime(limit: number = APP_CONSTANTS.DEFAULT_TOP_LIMIT): Promise<Course[]> {
         return this.courseModel.findAll({
             order: [
                 ['rating', 'DESC'],
@@ -168,13 +141,7 @@ export class CoursesService {
             include: [
                 {
                     model: User,
-                    attributes: [
-                        'userId',
-                        'username',
-                        'avatarUrl',
-                        'firstName',
-                        'lastName'
-                    ]
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });

@@ -9,6 +9,7 @@ import {
 } from './course-comments.dto';
 import { Course } from 'src/courses/courses.model';
 import { User } from 'src/users/user.model';
+import { USER_ATTRIBUTES } from 'src/common/utils/sequelize.utils';
 
 @Injectable()
 export class CourseCommentsService {
@@ -30,7 +31,7 @@ export class CourseCommentsService {
                 },
                 {
                     model: User,
-                    attributes: ['userId', 'username', 'avatarUrl', 'firstName', 'lastName']
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ],
             order: [['createdAt', 'DESC']]
@@ -46,7 +47,7 @@ export class CourseCommentsService {
                 },
                 {
                     model: User,
-                    attributes: ['userId', 'username', 'avatarUrl', 'firstName', 'lastName']
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });

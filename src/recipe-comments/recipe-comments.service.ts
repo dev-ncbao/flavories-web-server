@@ -9,6 +9,7 @@ import {
 } from './recipe-comments.dto';
 import { Recipe } from 'src/recipes/recipes.model';
 import { User } from 'src/users/user.model';
+import { USER_ATTRIBUTES } from 'src/common/utils/sequelize.utils';
 
 @Injectable()
 export class RecipeCommentsService {
@@ -30,7 +31,7 @@ export class RecipeCommentsService {
                 },
                 {
                     model: User,
-                    attributes: ['userId', 'username', 'avatarUrl', 'firstName', 'lastName']
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ],
             order: [['createdAt', 'DESC']]
@@ -46,7 +47,7 @@ export class RecipeCommentsService {
                 },
                 {
                     model: User,
-                    attributes: ['userId', 'username', 'avatarUrl', 'firstName', 'lastName']
+                    attributes: [...USER_ATTRIBUTES]
                 }
             ]
         });

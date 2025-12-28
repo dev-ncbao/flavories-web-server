@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use strict';
 
 import {
@@ -11,11 +12,7 @@ import {
     CreatePaymentLinkDto,
     PaymentLinkResponseDto,
     PaymentInfoResponseDto,
-    CancelPaymentResponseDto,
-    WebhookDataDto,
-    CreateCoursePaymentDto,
     CoursePaymentResponseDto,
-    CheckPaymentStatusDto,
     PaymentStatusResponseDto,
     CoursePurchaseStatusResponseDto
 } from './payment.dto';
@@ -23,6 +20,7 @@ import { Course } from '../courses/courses.model';
 import { Payment } from './payment.model';
 import { UserService } from '../users/user.service';
 import { PaymentStatus } from '../common/types/types';
+import { APP_CONSTANTS } from 'src/common/constants/app.constants';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -77,15 +75,6 @@ export class PaymentService {
     }
 
     /**
-     * Verify webhook signature
-     */
-    verifyWebhookSignature(webhookData: WebhookDataDto): boolean {
-        const { signature, data } = webhookData;
-        const calculatedSignature = this.generateSignature(data);
-        return calculatedSignature === signature;
-    }
-
-    /**
      * Create payment link
      */
     async createPaymentLink(
@@ -126,19 +115,23 @@ export class PaymentService {
             });
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
+                const errorData = (await response.json().catch(() => ({}))) as {
+                    desc?: string;
+                };
                 throw new BadRequestException(
                     errorData.desc || `PayOS API error: ${response.statusText}`
                 );
             }
 
-            return await response.json();
+            return (await response.json()) as PaymentLinkResponseDto;
         } catch (error) {
             if (error instanceof BadRequestException) {
                 throw error;
             }
+            const errorMessage =
+                error instanceof Error ? error.message : 'Unknown error';
             throw new BadRequestException(
-                `Failed to create payment link: ${error.message}`
+                `Failed to create payment link: ${errorMessage}`
             );
         }
     }
@@ -146,9 +139,7 @@ export class PaymentService {
     /**
      * Get payment information by order code
      */
-    async getPaymentInfo(
-        orderCode: number
-    ): Promise<PaymentInfoResponseDto> {
+    async getPaymentInfo(orderCode: number): Promise<PaymentInfoResponseDto> {
         try {
             const response = await fetch(
                 `${this.apiUrl}/v2/payment-requests/${orderCode}`,
@@ -162,56 +153,23 @@ export class PaymentService {
             );
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
+                const errorData = (await response.json().catch(() => ({}))) as {
+                    desc?: string;
+                };
                 throw new BadRequestException(
                     errorData.desc || `PayOS API error: ${response.statusText}`
                 );
             }
 
-            return await response.json();
+            return (await response.json()) as PaymentInfoResponseDto;
         } catch (error) {
             if (error instanceof BadRequestException) {
                 throw error;
             }
+            const errorMessage =
+                error instanceof Error ? error.message : 'Unknown error';
             throw new BadRequestException(
-                `Failed to get payment info: ${error.message}`
-            );
-        }
-    }
-
-    /**
-     * Cancel payment link
-     */
-    async cancelPaymentLink(
-        orderCode: number
-    ): Promise<CancelPaymentResponseDto> {
-        try {
-            const response = await fetch(
-                `${this.apiUrl}/v2/payment-requests/${orderCode}/cancel`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-client-id': this.clientId,
-                        'x-api-key': this.apiKey
-                    }
-                }
-            );
-
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new BadRequestException(
-                    errorData.desc || `PayOS API error: ${response.statusText}`
-                );
-            }
-
-            return await response.json();
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error;
-            }
-            throw new BadRequestException(
-                `Failed to cancel payment link: ${error.message}`
+                `Failed to get payment info: ${errorMessage}`
             );
         }
     }
@@ -230,10 +188,9 @@ export class PaymentService {
         }
 
         // Check if course has a price
-        if (!course.dataValues.price || course.dataValues.price <= 0) {
-            throw new BadRequestException(
-                'Course does not have a valid price'
-            );
+        const coursePrice = course.getDataValue('price') as number | null;
+        if (!coursePrice || coursePrice <= 0) {
+            throw new BadRequestException('Course does not have a valid price');
         }
 
         // Get user information
@@ -250,21 +207,27 @@ export class PaymentService {
         );
 
         // Create payment description
-        const description = `PAYMENT - Order Number ${course.dataValues.courseId}`;
+        const courseIdValue = course.getDataValue('courseId');
+        const description = `PAYMENT - Order Number ${courseIdValue}`;
 
         // Create payment link DTO
-        const coursePrice = Math.round(course.dataValues.price);
+        const roundedPrice = Math.round(coursePrice);
+        const userFirstName = user.getDataValue('firstName');
+        const userLastName = user.getDataValue('lastName');
+        const userEmail = user.getDataValue('email');
+        const courseName = course.getDataValue('name');
+
         const paymentDto: CreatePaymentLinkDto = {
             orderCode,
-            amount: coursePrice,
+            amount: roundedPrice,
             description,
-            buyerName: `${user.dataValues.firstName} ${user.dataValues.lastName}`,
-            buyerEmail: user.dataValues.email,
+            buyerName: `${userFirstName} ${userLastName}`,
+            buyerEmail: userEmail,
             items: [
                 {
-                    name: course.dataValues.name,
+                    name: courseName,
                     quantity: 1,
-                    price: coursePrice
+                    price: roundedPrice
                 }
             ],
             returnUrl: `${this.frontendUrl}/payment/success?orderCode=${orderCode}&courseId=${courseId}`,
@@ -277,13 +240,17 @@ export class PaymentService {
         // Calculate expiredAt (default: 2 days from now, or use expiredAt from DTO if provided)
         const expiredAt = paymentDto.expiredAt
             ? new Date(paymentDto.expiredAt * 1000)
-            : new Date(Date.now() + 2 * 24 * 60 * 60 * 1000); // 2 days from now
+            : new Date(
+                  Date.now() +
+                      APP_CONSTANTS.PAYMENT_EXPIRY_DAYS *
+                          APP_CONSTANTS.MILLISECONDS_PER_DAY
+              );
 
         // Create payment record in database
         await this.paymentModel.create({
             courseId: courseId,
             userId: userId,
-            amount: coursePrice,
+            amount: roundedPrice,
             orderCode: orderCode,
             paymentLinkId: paymentLinkResponse.data.paymentLinkId,
             expiredAt: expiredAt,
@@ -292,7 +259,15 @@ export class PaymentService {
 
         // Return only checkoutUrl
         // payOS response includes checkoutUrl in the data object
-        const checkoutUrl = (paymentLinkResponse.data as any).checkoutUrl;
+        const paymentData = paymentLinkResponse.data as {
+            checkoutUrl?: string;
+        };
+        const checkoutUrl = paymentData.checkoutUrl;
+        if (!checkoutUrl) {
+            throw new BadRequestException(
+                'Payment link response missing checkoutUrl'
+            );
+        }
         return {
             checkoutUrl: checkoutUrl
         };
@@ -322,23 +297,13 @@ export class PaymentService {
         }
 
         // Call payOS API to get latest payment status using orderCode
-        let payOSStatus: string = payment.dataValues.status; // Default to current status
+        let payOSStatus: string = payment.getDataValue('status'); // Default to current status
         try {
             const paymentInfo = await this.getPaymentInfo(orderCode);
-            
-            // Map payOS status to our PaymentStatus enum
-            // payOS status values: PENDING, PAID, CANCELLED, EXPIRED
-            const payOSStatusValue = paymentInfo.data.status;
-            if (payOSStatusValue === 'PAID') {
-                payOSStatus = PaymentStatus.PAID;
-            } else if (payOSStatusValue === 'CANCELLED') {
-                payOSStatus = PaymentStatus.CANCELLED;
-            } else if (payOSStatusValue === 'EXPIRED') {
-                payOSStatus = PaymentStatus.EXPIRED;
-            } else {
-                payOSStatus = PaymentStatus.PENDING;
-            }
-            
+            payOSStatus = this.mapPayOSStatusToPaymentStatus(
+                paymentInfo.data.status
+            );
+
             // Update payment record in database with latest status
             await payment.update({
                 status: payOSStatus
@@ -349,10 +314,10 @@ export class PaymentService {
                 `Failed to fetch payment status from payOS for orderCode ${orderCode}:`,
                 error
             );
-            payOSStatus = payment.dataValues.status;
+            payOSStatus = payment.getDataValue('status');
         }
 
-        const isSuccess = payOSStatus === 'PAID';
+        const isSuccess = payOSStatus === String(PaymentStatus.PAID);
 
         // Reload payment to get updated values
         await payment.reload();
@@ -361,14 +326,14 @@ export class PaymentService {
             isSuccess: isSuccess,
             status: payOSStatus,
             payment: {
-                paymentId: payment.dataValues.paymentId,
-                courseId: payment.dataValues.courseId,
-                userId: payment.dataValues.userId,
-                amount: payment.dataValues.amount,
-                orderCode: payment.dataValues.orderCode,
+                paymentId: payment.getDataValue('paymentId'),
+                courseId: payment.getDataValue('courseId'),
+                userId: payment.getDataValue('userId'),
+                amount: payment.getDataValue('amount'),
+                orderCode: payment.getDataValue('orderCode'),
                 status: payOSStatus,
-                createdAt: payment.dataValues.createdAt,
-                updatedAt: payment.dataValues.updatedAt
+                createdAt: payment.getDataValue('createdAt'),
+                updatedAt: payment.getDataValue('updatedAt')
             }
         };
     }
@@ -399,38 +364,39 @@ export class PaymentService {
         return {
             hasPurchased: true,
             payment: {
-                paymentId: payment.dataValues.paymentId,
-                courseId: payment.dataValues.courseId,
-                userId: payment.dataValues.userId,
-                amount: payment.dataValues.amount,
-                orderCode: payment.dataValues.orderCode,
-                status: payment.dataValues.status,
-                createdAt: payment.dataValues.createdAt,
-                updatedAt: payment.dataValues.updatedAt
+                paymentId: payment.getDataValue('paymentId'),
+                courseId: payment.getDataValue('courseId'),
+                userId: payment.getDataValue('userId'),
+                amount: payment.getDataValue('amount'),
+                orderCode: payment.getDataValue('orderCode'),
+                status: payment.getDataValue('status'),
+                createdAt: payment.getDataValue('createdAt'),
+                updatedAt: payment.getDataValue('updatedAt')
             }
         };
     }
 
     /**
-     * Handle webhook from payOS
+     * Map PayOS status to internal PaymentStatus enum
      */
-    async handleWebhook(webhookData: WebhookDataDto): Promise<void> {
-        // Verify signature
-        if (!this.verifyWebhookSignature(webhookData)) {
-            throw new BadRequestException('Invalid webhook signature');
+    private mapPayOSStatusToPaymentStatus(payOSStatus: string): string {
+        // Map payOS status to our PaymentStatus enum
+        // PayOS status values: PENDING, PAID, CANCELLED, EXPIRED, PROCESSING, etc.
+        switch (payOSStatus) {
+            case 'PAID':
+                return PaymentStatus.PAID;
+            case 'CANCELLED':
+                return PaymentStatus.CANCELLED;
+            case 'EXPIRED':
+                return PaymentStatus.EXPIRED;
+            case 'PROCESSING':
+                return PaymentStatus.PROCESSING;
+            case 'UNDERPAID':
+                return PaymentStatus.UNDERPAID;
+            case 'FAILED':
+                return PaymentStatus.FAILED;
+            default:
+                return PaymentStatus.PENDING;
         }
-
-        // Process webhook data
-        const { data } = webhookData;
-
-        // TODO: Implement your business logic here
-        // For example: update order status in database, send notification, etc.
-        console.log('Payment webhook received:', {
-            orderCode: data.orderCode,
-            amount: data.amount,
-            status: data.code,
-            description: data.desc
-        });
     }
 }
-

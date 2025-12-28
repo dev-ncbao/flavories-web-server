@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SignInRequest, SignUpRequest } from './auth.dto';
 import { isValidEmail } from 'src/common/utils/email.utils';
 import { User } from 'src/users/user.model';
+import { APP_CONSTANTS } from 'src/common/constants/app.constants';
 
 @Injectable()
 export class AuthService {

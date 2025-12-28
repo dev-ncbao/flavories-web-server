@@ -13,15 +13,8 @@ import {
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import {
-    CreatePaymentLinkDto,
-    PaymentLinkResponseDto,
-    PaymentInfoResponseDto,
-    CancelPaymentResponseDto,
-    CancelPaymentLinkDto,
-    WebhookDataDto,
     CreateCoursePaymentDto,
     CoursePaymentResponseDto,
-    CheckPaymentStatusDto,
     PaymentStatusResponseDto,
     CoursePurchaseStatusResponseDto
 } from './payment.dto';
@@ -36,58 +29,12 @@ import type { AuthenticatedRequest } from '../common/types/authenticated-user';
 
 @ApiTags('payment')
 @Controller('payment')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth('accessToken')
 export class PaymentController {
     constructor(private readonly paymentService: PaymentService) {}
 
-    @Post('payment-link')
-    @ApiOperation({
-        summary: 'Tạo link thanh toán',
-        description:
-            'Tạo link thanh toán với QR code. returnUrl và cancelUrl sẽ tự động được tạo nếu không được cung cấp.'
-    })
-    @ApiResponse({
-        status: 200,
-        description: 'Tạo link thanh toán thành công. Response chứa qrCode để hiển thị QR code.',
-        type: PaymentLinkResponseDto
-    })
-    @ApiResponse({ status: 400, description: 'Bad Request' })
-    async createPaymentLink(
-        @Body() dto: CreatePaymentLinkDto
-    ): Promise<PaymentLinkResponseDto> {
-        return this.paymentService.createPaymentLink(dto);
-    }
-
-    @Get('payment-info/:orderCode')
-    @ApiOperation({ summary: 'Lấy thông tin thanh toán' })
-    @ApiResponse({
-        status: 200,
-        description: 'Lấy thông tin thanh toán thành công',
-        type: PaymentInfoResponseDto
-    })
-    @ApiResponse({ status: 400, description: 'Bad Request' })
-    async getPaymentInfo(
-        @Param('orderCode', ParseIntPipe) orderCode: number
-    ): Promise<PaymentInfoResponseDto> {
-        return this.paymentService.getPaymentInfo(orderCode);
-    }
-
-    @Post('cancel-payment')
-    @ApiOperation({ summary: 'Hủy link thanh toán' })
-    @ApiResponse({
-        status: 200,
-        description: 'Hủy link thanh toán thành công',
-        type: CancelPaymentResponseDto
-    })
-    @ApiResponse({ status: 400, description: 'Bad Request' })
-    async cancelPaymentLink(
-        @Body() dto: CancelPaymentLinkDto
-    ): Promise<CancelPaymentResponseDto> {
-        return this.paymentService.cancelPaymentLink(dto.orderCode);
-    }
-
     @Post('course')
-    @UseGuards(JwtAuthGuard)
-    @ApiBearerAuth('accessToken')
     @ApiOperation({
         summary: 'Tạo link thanh toán cho khóa học',
         description:
@@ -124,6 +71,7 @@ export class PaymentController {
         type: PaymentStatusResponseDto
     })
     @ApiResponse({ status: 400, description: 'Bad Request' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     async checkPaymentStatus(
         @Query('courseId', ParseIntPipe) courseId: number,
         @Query('orderCode', ParseIntPipe) orderCode: number
@@ -135,8 +83,6 @@ export class PaymentController {
     }
 
     @Get('course/:courseId/purchase-status')
-    @UseGuards(JwtAuthGuard)
-    @ApiBearerAuth('accessToken')
     @ApiOperation({
         summary: 'Kiểm tra người dùng đã mua khóa học chưa',
         description:
@@ -157,23 +103,4 @@ export class PaymentController {
             req.user.userId
         );
     }
-
-    @Post('webhook')
-    @ApiOperation({ summary: 'Webhook nhận thông tin thanh toán từ payOS' })
-    @ApiResponse({
-        status: 200,
-        description: 'Webhook processed successfully'
-    })
-    @ApiResponse({ status: 400, description: 'Invalid signature' })
-    async handleWebhook(@Body() webhookData: WebhookDataDto): Promise<{
-        code: string;
-        desc: string;
-    }> {
-        await this.paymentService.handleWebhook(webhookData);
-        return {
-            code: '00',
-            desc: 'success'
-        };
-    }
 }
-

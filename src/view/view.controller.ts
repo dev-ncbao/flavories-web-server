@@ -5,7 +5,8 @@ import {
     Delete,
     Body,
     Param,
-    Query
+    Query,
+    NotFoundException
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ViewService } from './view.service';
@@ -90,7 +91,7 @@ export class ViewController {
         const view = await this.viewService.getViewById(parseInt(id, 10));
 
         if (!view) {
-            throw new Error('View not found');
+            throw new NotFoundException('View not found');
         }
 
         return {

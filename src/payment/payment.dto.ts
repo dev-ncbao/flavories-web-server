@@ -103,11 +103,6 @@ export class PaymentLinkResponseDto {
     };
 }
 
-export class GetPaymentInfoDto {
-    @ApiProperty({ description: 'Mã đơn hàng (order code)' })
-    orderCode: number;
-}
-
 export class PaymentInfoResponseDto {
     @ApiProperty()
     code: string;
@@ -133,19 +128,6 @@ export class PaymentInfoResponseDto {
     };
 }
 
-export class CancelPaymentLinkDto {
-    @ApiProperty({ description: 'Mã đơn hàng (order code)' })
-    orderCode: number;
-}
-
-export class CancelPaymentResponseDto {
-    @ApiProperty()
-    code: string;
-
-    @ApiProperty()
-    desc: string;
-}
-
 export class CreateCoursePaymentDto {
     @ApiProperty({ description: 'ID của khóa học cần thanh toán' })
     courseId: number;
@@ -158,21 +140,13 @@ export class CoursePaymentResponseDto {
     checkoutUrl: string;
 }
 
-export class CheckPaymentStatusDto {
-    @ApiProperty({ description: 'ID của khóa học' })
-    courseId: number;
-
-    @ApiProperty({ description: 'Mã đơn hàng (order code)' })
-    orderCode: number;
-}
-
 export class PaymentStatusResponseDto {
     @ApiProperty({ description: 'Trạng thái thanh toán có thành công hay không' })
     isSuccess: boolean;
 
     @ApiProperty({
         description: 'Trạng thái thanh toán',
-        enum: ['PENDING', 'PAID', 'CANCELLED', 'FAILED']
+        enum: ['PAID', 'PENDING', 'PROCESSING', 'CANCELLED']
     })
     status: string;
 
@@ -211,29 +185,3 @@ export class CoursePurchaseStatusResponseDto {
         updatedAt: Date;
     };
 }
-
-export class WebhookDataDto {
-    @ApiProperty()
-    code: string;
-
-    @ApiProperty()
-    desc: string;
-
-    @ApiProperty()
-    data: {
-        orderCode: number;
-        amount: number;
-        description: string;
-        accountNumber: string;
-        reference: string;
-        transactionDateTime: string;
-        currency: string;
-        paymentLinkId: string;
-        code: string;
-        desc: string;
-    };
-
-    @ApiProperty()
-    signature: string;
-}
-
